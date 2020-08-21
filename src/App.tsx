@@ -3,27 +3,17 @@ import {
     HashRouter as Router,
     Switch,
     Route,
-    Link,
     Redirect,
 } from 'react-router-dom';
 import styled from 'styled-components';
 import 'css/index.scss';
+import Nav from './components/Nav';
 
 const Wrapper = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: 100vh;
-`;
-
-const Nav = styled.nav`
-      display: flex;
-      justify-content: space-between;
-      > .nav-item {
-          flex: 1;
-          text-align: center;
-          padding: 20px 0;
-      }
 `;
 
 function App() {
@@ -53,13 +43,7 @@ function App() {
                         <NoMatch />
                     </Route>
                 </Switch>
-                <Nav>
-                    <Link className="nav-item" to="/labels">标签</Link>
-                    <Link className="nav-item" to="/bill">账单</Link>
-                    <Link className="nav-item" to="/money">记账</Link>
-                    <Link className="nav-item" to="/statistics">统计</Link>
-                    <Link className="nav-item" to="/me">我的</Link>
-                </Nav>
+                <Nav />
             </Wrapper>
         </Router>
     );

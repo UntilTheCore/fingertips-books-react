@@ -1,3 +1,10 @@
 // 引入react-cli 通用样式
 @import-normalize;
 @import 'css/reset.scss';
+@import 'css/helper.scss';
+
+body {
+  font-family : $font-hei;
+  font-size : 16px;
+  line-height : 1.2;
+}
