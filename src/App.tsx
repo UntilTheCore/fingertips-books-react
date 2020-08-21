@@ -5,31 +5,31 @@ import {
     Route,
     Link,
     Redirect,
-} from "react-router-dom";
+} from 'react-router-dom';
+import styled from 'styled-components';
+import 'css/index.scss';
+
+const Wrapper = styled.div`
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+`;
+
+const Nav = styled.nav`
+      display: flex;
+      justify-content: space-between;
+      > .nav-item {
+          flex: 1;
+          text-align: center;
+          padding: 20px 0;
+      }
+`;
+
 function App() {
     return (
         <Router>
-            <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/labels">标签</Link>
-                        </li>
-                        <li>
-                            <Link to="/bill">账单</Link>
-                        </li>
-                        <li>
-                            <Link to="/money">记账</Link>
-                        </li>
-                        <li>
-                            <Link to="/statistics">统计</Link>
-                        </li>
-                        <li>
-                            <Link to="/me">我的</Link>
-                        </li>
-                    </ul>
-                </nav>
-                
+            <Wrapper>
                 <Switch>
                     <Route path="/labels">
                         <Labels />
@@ -53,7 +53,14 @@ function App() {
                         <NoMatch />
                     </Route>
                 </Switch>
-            </div>
+                <Nav>
+                    <Link className="nav-item" to="/labels">标签</Link>
+                    <Link className="nav-item" to="/bill">账单</Link>
+                    <Link className="nav-item" to="/money">记账</Link>
+                    <Link className="nav-item" to="/statistics">统计</Link>
+                    <Link className="nav-item" to="/me">我的</Link>
+                </Nav>
+            </Wrapper>
         </Router>
     );
 }
@@ -63,7 +70,7 @@ function Statistics() {
 }
 
 function Bill() {
-    return <h2>账单页面</h2>
+    return <h2>账单页面</h2>;
 }
 
 function Labels() {
@@ -75,11 +82,11 @@ function Money() {
 }
 
 function Me() {
-    return <h2>我的页面</h2>
+    return <h2>我的页面</h2>;
 }
 
 function NoMatch() {
-    return <h2>访问地址有误，将返回主页。</h2>
+    return <h2>访问地址有误，将返回主页。</h2>;
 }
 
 export default App;
