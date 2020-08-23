@@ -1,12 +1,12 @@
 import React from 'react';
-import {
-    HashRouter as Router,
-    Switch,
-    Route,
-    Redirect,
-} from 'react-router-dom';
+import { HashRouter as Router, Switch, Route, Redirect, } from 'react-router-dom';
 import 'css/index.scss';
-import Layout from './components/Layout';
+import Statistics from 'views/Statistics';
+import Money from 'views/Money';
+import Bill from 'views/Bill';
+import Me from 'views/Me';
+import NoMatch from 'views/NoMatch';
+import Labels from 'views/Labels';
 
 function App() {
     return (
@@ -27,59 +27,17 @@ function App() {
                 <Route path="/me">
                     <Me />
                 </Route>
+                {/* 默认路由 */}
                 <Route exact path="/">
                     <Redirect to="/money" />
                 </Route>
+                {/* 404 */}
                 <Route path="*">
                     <NoMatch />
                 </Route>
             </Switch>
         </Router>
     );
-}
-
-function Statistics() {
-    return (
-        <Layout>
-            <h2>统计页面</h2>
-        </Layout>
-    );
-}
-
-function Bill() {
-    return (
-        <Layout>
-            <h2>账单页面</h2>
-        </Layout>
-    );
-}
-
-function Labels() {
-    return (
-        <Layout>
-            <h2>标签页面</h2>
-        </Layout>
-    );
-}
-
-function Money() {
-    return (
-        <Layout>
-            <h2>记账页面</h2>
-        </Layout>
-    );
-}
-
-function Me() {
-    return (
-        <Layout>
-            <h2>我的页面</h2>
-        </Layout>
-    );
-}
-
-function NoMatch() {
-    return <h2>访问地址有误，将返回主页。</h2>;
 }
 
 export default App;
