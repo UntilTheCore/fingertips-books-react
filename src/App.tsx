@@ -5,68 +5,77 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom';
-import styled from 'styled-components';
 import 'css/index.scss';
-import Nav from './components/Nav';
-
-const Wrapper = styled.div`
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100vh;
-`;
+import Layout from './components/Layout';
 
 function App() {
     return (
         <Router>
-            <Wrapper>
-                <Switch>
-                    <Route path="/labels">
-                        <Labels />
-                    </Route>
-                    <Route path="/bill">
-                        <Bill />
-                    </Route>
-                    <Route path="/money">
-                        <Money />
-                    </Route>
-                    <Route path="/statistics">
-                        <Statistics />
-                    </Route>
-                    <Route path="/me">
-                        <Me />
-                    </Route>
-                    <Route exact path="/">
-                        <Redirect to="/money" />
-                    </Route>
-                    <Route path="*">
-                        <NoMatch />
-                    </Route>
-                </Switch>
-                <Nav />
-            </Wrapper>
+            <Switch>
+                <Route path="/labels">
+                    <Labels />
+                </Route>
+                <Route path="/bill">
+                    <Bill />
+                </Route>
+                <Route path="/money">
+                    <Money />
+                </Route>
+                <Route path="/statistics">
+                    <Statistics />
+                </Route>
+                <Route path="/me">
+                    <Me />
+                </Route>
+                <Route exact path="/">
+                    <Redirect to="/money" />
+                </Route>
+                <Route path="*">
+                    <NoMatch />
+                </Route>
+            </Switch>
         </Router>
     );
 }
 
 function Statistics() {
-    return <h2>统计页面</h2>;
+    return (
+        <Layout>
+            <h2>统计页面</h2>
+        </Layout>
+    );
 }
 
 function Bill() {
-    return <h2>账单页面</h2>;
+    return (
+        <Layout>
+            <h2>账单页面</h2>
+        </Layout>
+    );
 }
 
 function Labels() {
-    return <h2>标签页面</h2>;
+    return (
+        <Layout>
+            <h2>标签页面</h2>
+        </Layout>
+    );
 }
 
 function Money() {
-    return <h2>记账页面</h2>;
+    return (
+        <Layout>
+            <h2>记账页面</h2>
+        </Layout>
+    );
 }
 
 function Me() {
-    return <h2>我的页面</h2>;
+    return (
+        <Layout>
+            <h2>我的页面</h2>
+        </Layout>
+    );
 }
 
 function NoMatch() {
