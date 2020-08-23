@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Icon from './Icon';
 const NavWrapper = styled.nav`
       display: flex;
@@ -25,26 +25,26 @@ const NavWrapper = styled.nav`
 function Nav() {
     return (
         <NavWrapper>
-            <Link className="nav-item selected" to="/labels" replace>
+            <NavLink activeClassName={"selected"} className="nav-item" to="/labels" replace>
                 <Icon name={'label'} />
                 标签
-            </Link>
-            <Link className="nav-item" to="/bill" replace>
+            </NavLink>
+            <NavLink activeClassName={"selected"} className="nav-item" to="/bill" replace>
                 <Icon name={'bill'} />
                 账单
-            </Link>
-            <Link className="nav-item" to="/money" replace>
+            </NavLink>
+            <NavLink activeClassName={"selected"} className="nav-item" to="/money" replace>
                 <Icon name={'money'} />
                 记账
-            </Link>
-            <Link className="nav-item" to="/statistics" replace>
+            </NavLink>
+            <NavLink activeClassName={"selected"} className="nav-item" to="/statistics" replace>
                 <Icon name={'statistics'} />
                 统计
-            </Link>
-            <Link className="nav-item" to="/me" replace>
+            </NavLink>
+            <NavLink activeClassName={"selected"} className="nav-item" to="/me" replace>
                 <Icon name={'me'} />
                 我的
-            </Link>
+            </NavLink>
         </NavWrapper>
     );
 }
