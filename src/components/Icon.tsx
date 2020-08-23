@@ -2,10 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 // 防止被tree shaking，使用require引入svg
-require('icon/bill.svg');
-require('icon/label.svg');
-require('icon/me.svg');
-require('icon/statistics.svg');
+// 引入整个存svg的目录
+const importAll = (requireContext: __WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext);
+try {
+    importAll(require.context('icons', true, /\.svg$/));
+} catch (error) {
+    console.log('import all svg error!',error);
+}
 
 type Props = {
     name: string,
