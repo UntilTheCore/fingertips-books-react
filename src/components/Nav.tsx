@@ -5,7 +5,7 @@ import Icon from './Icon';
 const NavWrapper = styled.nav`
       display: flex;
       justify-content: space-between;
-      line-height: 24px;
+      line-height: 20px;
       box-shadow:  0 0 3px rgba(0,0,0,.25);
       > .nav-item {
           flex: 1;
@@ -13,7 +13,7 @@ const NavWrapper = styled.nav`
           flex-direction: column;
           align-items: center;
           text-align: center;
-          padding: 16px 0;
+          padding: 8px 0;
           font-size:14px;
           
           &.selected {

@@ -6,7 +6,7 @@ const Wrapper = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100vh;
+      height: calc(var(--vh, 1vh));;
 `;
 
 const Layout = (props: any) => {
