@@ -35,13 +35,20 @@ const TagSection = styled.section`
 `
 
 const Tag = (props: Props) => {
+    
+    const onClickMe = () => {
+        console.log('hi');
+    }
+    
     return (
-        <TagSection>
-            <div>
-                <Icon name={ props.iconName } />
-            </div>
-            <span>{ props.tagTitle }</span>
-        </TagSection>
+        <div onClick={onClickMe}>
+            <TagSection>
+                <div>
+                    <Icon name={ props.iconName } />
+                </div>
+                <span>{ props.tagTitle }</span>
+            </TagSection>
+        </div>
     );
 };
 

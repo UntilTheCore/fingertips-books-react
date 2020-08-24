@@ -19,7 +19,6 @@ const Tags = () => {
     return (
         <TagsSection>
             { liArray }
-            <Tag iconName="dining" tagTitle="餐饮" />
         </TagsSection>
     );
 };
