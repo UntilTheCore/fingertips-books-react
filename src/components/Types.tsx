@@ -12,6 +12,7 @@ const TypesSection = styled.section`
     background: rgba(5,200,245);
     font-size: 18px;
     font-weight: bold;
+    color: inherit;
     div {
         position: relative;
         padding: 12px 16px;
@@ -21,7 +22,7 @@ const TypesSection = styled.section`
             bottom: 0;
             left: 0;
             width: 100%;
-            border: 1px solid #333;
+            border: 1px solid;
         }
     }
 `;
