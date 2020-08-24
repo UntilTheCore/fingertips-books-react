@@ -8,6 +8,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
     height: calc(var(--vh, 1vh));
     > main {
+        flex-grow: 1;
         overflow: auto;
         // 使 iOS 端滑动顺畅
         -webkit-overflow-scrolling: touch;
@@ -20,7 +21,6 @@ const Wrapper = styled.div`
 `;
 
 const Layout = (props: any) => {
-    console.dir(props.children);
     return (
         <Wrapper>
             <header>{ props.children[0] }</header>
