@@ -5,6 +5,17 @@ import Icon from '../Icon';
 const Wrapper = styled.div`
     font-size: 14px;
     background-color: #f2f2f4;
+    animation: .5s linear .1s footerAnimation;
+
+    @keyframes footerAnimation {
+        0% {
+            transform: translateY(100%);
+        }
+
+        100% {
+            transform: translateY(0%);
+        }
+    }
     > header {
         display: flex;
         border-bottom: .5px solid rgb(226,227,231);
@@ -70,7 +81,8 @@ const Wrapper = styled.div`
             }
         }
     }
-`
+    
+`;
 const NumberPad = () => {
     return (
         <Wrapper>
@@ -106,7 +118,7 @@ const NumberPad = () => {
                 <div>完成</div>
             </main>
         </Wrapper>
-    )
-}
+    );
+};
 
 export default NumberPad;
