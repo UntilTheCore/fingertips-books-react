@@ -9,7 +9,7 @@ const TypesSection = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: deepskyblue;
+    background: rgba(5,200,245);
     font-size: 18px;
     font-weight: bold;
     div {

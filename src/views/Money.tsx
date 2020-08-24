@@ -1,12 +1,13 @@
-import Layout from '../components/Layout';
 import React from 'react';
-import Types from '../components/Types';
+import Layout from 'components/Layout';
+import Types from 'components/Types';
+import Tags from 'components/Tags';
 
 const Money = () => {
     return (
         <Layout>
             <Types type='-' />
-            <h2>记账页面</h2>
+            <Tags />
         </Layout>
     );
 };
