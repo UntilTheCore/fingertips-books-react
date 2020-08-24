@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Nav from './Nav';
 
 const Wrapper = styled.div`
     display: flex;
@@ -23,9 +22,9 @@ const Wrapper = styled.div`
 const Layout = (props: any) => {
     return (
         <Wrapper>
-            <header>{ props.children[0] }</header>
-            <main> { props.children[1] } </main>
-            <footer><Nav /></footer>
+            <header>{ props.headerSlot }</header>
+            <main> { props.children } </main>
+            <footer>{ props.footerSlot}</footer>
         </Wrapper>
     );
 };
