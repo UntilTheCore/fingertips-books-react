@@ -11,7 +11,28 @@ const Tags = () => {
         ['dining', '餐饮'],
         ['shopping', '购物'],
         ['bus', '交通'],
-        ['commodity', '日常']]);
+        ['commodity', '日常'],
+        ['a','a'],
+        ['b','a'],
+        ['d','a'],
+        ['e','a'],
+        ['c','a'],
+        ['f','a'],
+        ['g','a'],
+        ['h','a'],
+        ['h','a'],
+        ['j','a'],
+        ['k','a'],
+        ['l','a'],
+        ['o','a'],
+        ['i','a'],
+        ['u','a'],
+        ['y','a'],
+        ['t','a'],
+        ['m','a'],
+        ['n','a'],
+        ['v','a'],
+    ]);
     const liArray: any = [];
     iconHashTable.forEach((value, key) => {
         liArray.push(<Tag key={ key } iconName={ key } tagTitle={ value } />);
