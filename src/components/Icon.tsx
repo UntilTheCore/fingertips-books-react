@@ -12,20 +12,25 @@ try {
 
 type Props = {
     name: string,
+    style?: object,
 }
 
-const Svg = styled.svg`
-    width: 1.6em; height: 1.6em;
-    vertical-align: -0.15em;
-    fill: currentColor;
-    overflow: hidden;
+const Wrapper: React.FC = styled.div`
+    > svg {
+        width: 1.6em; height: 1.6em;
+        vertical-align: -0.15em;
+        fill: currentColor;
+        overflow: hidden;
+    }
 `;
 
 const Icon = (props: Props) => {
     return (
-        <Svg aria-hidden={ true }>
-            <use xlinkHref={ '#' + props.name } />
-        </Svg>
+        <Wrapper>
+            <svg aria-hidden={ true } style={props.style}>
+                <use xlinkHref={ '#' + props.name }/>
+            </svg>
+        </Wrapper>
     );
 };
 
