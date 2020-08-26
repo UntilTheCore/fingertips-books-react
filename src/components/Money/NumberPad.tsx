@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import Icon from '../Icon';
+import { Button } from 'antd-mobile';
 
 const Wrapper = styled.div`
     font-size: 14px;
-    background-color: #f2f2f4;
-    animation: .5s linear .1s footerAnimation;
+    background-color: #f2f3f5;
+    animation: .35s linear footerAnimation;
 
     @keyframes footerAnimation {
         0% {
@@ -16,9 +17,10 @@ const Wrapper = styled.div`
             transform: translateY(0%);
         }
     }
+    
     > header {
         display: flex;
-        border-bottom: .5px solid rgb(226,227,231);
+        box-shadow: 0 -.5px 1px 0 rgba(210,210,211,0.5);
         label {
             flex: 1;
             display: flex;
@@ -58,26 +60,32 @@ const Wrapper = styled.div`
     > main {
         display: flex;
         flex-wrap: wrap;
-        div {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        > .btn {
             width: 25%;
-            height: 55px;
-            font-size: 16px;
-            border-right: .5px solid rgb(226,227,231);
-            border-bottom: .5px solid rgb(226,227,231);
-        }
-        div:nth-child(16) {
-            background: rgba(5,200,245);
-        }
-        div:nth-child(4) {
-            display: flex;
-            align-items: center;
-            svg {
-                width: 1.2em;
-                height: 1.2em;
-                margin-right: 5px;
+            
+            border-radius: 0;
+            background-color: inherit;
+            // 圆角被按钮的before控制
+            &::before {
+                border-radius: 0;
+                border-width: .25px;
+                border-color: #ccc;
+            }
+            
+            &:nth-child(4),&:nth-child(15) {
+                > div,span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 15px;
+                }
+            }
+            &:nth-child(16) {
+                background: rgba(5,200,245);
+            }
+            
+            &.activeBtn {
+                background: #e1e1e1;
             }
         }
     }
@@ -95,27 +103,35 @@ const NumberPad = () => {
                 <div>3456789.12+3456789.12</div>
             </header>
             <main>
-                <div>7</div>
-                <div>8</div>
-                <div>9</div>
-                <div>
-                    <Icon name="date" />
+                <Button activeClassName="activeBtn" className="btn">7</Button>
+                <Button activeClassName="activeBtn" className="btn">8</Button>
+                <Button activeClassName="activeBtn" className="btn">9</Button>
+                <Button activeClassName="activeBtn" className="btn"
+                        icon={ <Icon name='date' style={ {
+                            width: '1.2em',
+                            height: '1.2em',
+                            'margin-right': '4px'
+                        } } /> }>
                     今天
-                </div>
-                <div>4</div>
-                <div>5</div>
-                <div>6</div>
-                <div>-</div>
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>+</div>
-                <div>.</div>
-                <div>0</div>
-                <div>
-                    <Icon name="delete" />
-                </div>
-                <div>完成</div>
+                </Button>
+                <Button activeClassName="activeBtn" className="btn">4</Button>
+                <Button activeClassName="activeBtn" className="btn">5</Button>
+                <Button activeClassName="activeBtn" className="btn">6</Button>
+                <Button activeClassName="activeBtn" className="btn">-</Button>
+                <Button activeClassName="activeBtn" className="btn">1</Button>
+                <Button activeClassName="activeBtn" className="btn">2</Button>
+                <Button activeClassName="activeBtn" className="btn">3</Button>
+                <Button activeClassName="activeBtn" className="btn">+</Button>
+                <Button activeClassName="activeBtn" className="btn">.</Button>
+                <Button activeClassName="activeBtn" className="btn">0</Button>
+                <Button activeClassName="activeBtn" className="btn"
+                        icon={ <Icon name="delete"
+                                     style={ {
+                                         width: '1.4em',
+                                         height: '1.4em'
+                                     } } /> }>
+                </Button>
+                <Button activeClassName="activeBtn" className="btn">完成</Button>
             </main>
         </Wrapper>
     );
