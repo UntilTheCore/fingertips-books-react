@@ -17,7 +17,8 @@ const Wrapper = styled.div`
             transform: translateY(0%);
         }
     }
-    
+   
+    // 备注和金额
     > header {
         display: flex;
         box-shadow: 0 -.5px 1px 0 rgba(210,210,211,0.5);
@@ -39,11 +40,19 @@ const Wrapper = styled.div`
             
             > input {
                 border: none;
-                line-height: 24px;
-                max-width: 100px;
                 outline: none;
-                font-size: inherit;
+                font-size: 14px;
                 background: inherit;
+                margin-bottom: 1.5px;
+                // 解除 input 的默认宽度
+                min-width: 0;
+                
+                &::-webkit-input-placeholder {
+                    line-height: normal;
+                }
+                &::-ms-input-placeholder {
+                    line-height: normal;
+                }
             }
         }
         
@@ -57,6 +66,7 @@ const Wrapper = styled.div`
         }
     }
     
+    // 数字键盘
     > main {
         display: flex;
         flex-wrap: wrap;
