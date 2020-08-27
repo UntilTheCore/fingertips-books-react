@@ -4,19 +4,9 @@ import Icon from '../Icon';
 import { Button } from 'antd-mobile';
 
 const Wrapper = styled.div`
+    max-width: 100vw;
     font-size: 14px;
     background-color: #f2f3f5;
-    animation: .35s linear footerAnimation;
-
-    @keyframes footerAnimation {
-        0% {
-            transform: translateY(100%);
-        }
-
-        100% {
-            transform: translateY(0%);
-        }
-    }
    
     // 备注和金额
     > header {
@@ -101,9 +91,9 @@ const Wrapper = styled.div`
     }
     
 `;
-const NumberPad = () => {
+const NumberPad = (props: any) => {
     return (
-        <Wrapper>
+        <Wrapper className={props.className}>
             <header>
                 <label>
                     <Icon name="notes" />
