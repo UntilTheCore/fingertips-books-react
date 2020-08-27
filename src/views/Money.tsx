@@ -11,7 +11,7 @@ type Props = {
 const Money = () => {
     return (
         <Layout
-            headerSlot={<Types type='-' />}
+            headerSlot={<Types defaultType='-' />}
             footerSlot={
                     <QueueAnim animConfig={[
                         { opacity: [1, 0], translateY: [0, 200] },

@@ -94,7 +94,7 @@ const Wrapper = styled.div`
 const NumberPad = (props: any) => {
     const [note, setNote] = useState('');
     const refInput = useRef<HTMLInputElement>(null)
-    const x = () => {
+    const getInputValue = () => {
         console.log(refInput?.current?.value );
     }
     
@@ -107,7 +107,7 @@ const NumberPad = (props: any) => {
                     <input type="text"
                            defaultValue={ note }
                            ref={refInput}
-                           onBlur={x}
+                           onBlur={getInputValue}
                            placeholder="点击写备注..." />
                 </label>
                 <div>3456789.12+3456789.12</div>
