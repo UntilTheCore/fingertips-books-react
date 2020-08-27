@@ -3,8 +3,9 @@ import Icon from './Icon';
 import styled from 'styled-components';
 
 type Props = {
-   iconName: string,
-   tagTitle: string,
+    iconName: string,
+    tagTitle: string,
+    isSelected?: boolean,
 }
 
 const TagSection = styled.section`
