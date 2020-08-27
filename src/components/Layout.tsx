@@ -19,7 +19,13 @@ const Wrapper = styled.div`
     }
 `;
 
-const Layout = (props: any) => {
+type Props = {
+    headerSlot?: React.FC | Element | JSX.Element,
+    footerSlot?: React.FC | Element | JSX.Element,
+    children?: React.FC | Element | JSX.Element | React.FC[] | Element[] | JSX.Element[]
+}
+
+const Layout = (props: Props) => {
     return (
         <Wrapper>
             <header>{ props.headerSlot }</header>
