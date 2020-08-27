@@ -110,7 +110,7 @@ const NumberPad = (props: any) => {
                         icon={ <Icon name='date' style={ {
                             width: '1.2em',
                             height: '1.2em',
-                            'margin-right': '4px'
+                            marginRight: '4px'
                         } } /> }>
                     今天
                 </Button>
