@@ -9,6 +9,7 @@ const Wrapper = styled.div`
     > main {
         flex-grow: 1;
         overflow: auto;
+        background: #fff;
         // 使 iOS 端滑动顺畅
         -webkit-overflow-scrolling: touch;
         // 隐藏滚动条
