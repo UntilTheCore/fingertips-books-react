@@ -6,6 +6,7 @@ type Props = {
     iconName: string,
     tagTitle: string,
     isSelected?: boolean,
+    onClick?: () => void,
 }
 
 const TagSection = styled.section`
@@ -36,13 +37,8 @@ const TagSection = styled.section`
 `
 
 const Tag = (props: Props) => {
-    
-    const onClickMe = () => {
-        console.log('hi');
-    }
-    
     return (
-        <div onClick={onClickMe}>
+        <div onClick={props.onClick}>
             <TagSection>
                 <div className={props.isSelected ? 'selected' : ''}>
                     <Icon name={ props.iconName } style={{
