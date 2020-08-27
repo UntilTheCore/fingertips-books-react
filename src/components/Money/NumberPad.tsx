@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Icon from '../Icon';
 import { Button } from 'antd-mobile';
@@ -92,13 +92,23 @@ const Wrapper = styled.div`
     
 `;
 const NumberPad = (props: any) => {
+    const [note, setNote] = useState('');
+    const refInput = useRef<HTMLInputElement>(null)
+    const x = () => {
+        console.log(refInput?.current?.value );
+    }
+    
     return (
-        <Wrapper className={props.className}>
+        <Wrapper className={ props.className }>
             <header>
                 <label>
                     <Icon name="notes" />
                     <span>备注：</span>
-                    <input type="text" placeholder="点击写备注..." />
+                    <input type="text"
+                           defaultValue={ note }
+                           ref={refInput}
+                           onBlur={x}
+                           placeholder="点击写备注..." />
                 </label>
                 <div>3456789.12+3456789.12</div>
             </header>
