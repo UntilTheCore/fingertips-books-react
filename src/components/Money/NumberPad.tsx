@@ -93,11 +93,115 @@ const Wrapper = styled.div`
 `;
 const NumberPad = (props: any) => {
     const [note, setNote] = useState('');
-    const refInput = useRef<HTMLInputElement>(null)
+    const refInput = useRef<HTMLInputElement>(null);
     const getInputValue = () => {
-        console.log(refInput?.current?.value );
-    }
+        console.log(refInput?.current?.value);
+    };
     
+    const [isComputed, setIsComputed] = useState(false);
+    const [output, setOutput] = useState('0.00');
+    const [outputArr, setOutputArr] = useState(['', '']);
+    const X = (data: string) => {
+        // 停止加入左边，开始加入右边
+        // 点击加号后将+字符串放入 output，
+        if ( output.indexOf('+') >= 0 ) {
+            if ( data === '+' ) {
+                // 已有一个 + 号存在，判断 + 号后面是否有数字，有则计算之前的并在最后面加上 + 号
+                if ( outputArr[1].length >= 1 ) {
+                    // 执行计算
+                    const result = parseFloat(outputArr[0]) + parseFloat(outputArr[1]);
+                    setOutputArr([`${ result }`, '']);
+                    setOutput(`${ result }`);
+                }
+            } else if ( data === '-' ) {
+                // 执行加号替换
+                // 判断 outputArr的是否有长度，有则计算，并在计算好的值后面增加 - 号,否则替换
+                if(outputArr[1].length >= 1) {
+                    const result = parseFloat(outputArr[0]) + parseFloat(outputArr[1]);
+                    setOutputArr([`${ result }`, '']);
+                    setOutput(`${ result }-`);
+                }else {
+                    const temp = output.substr(0, output.length - 1) + data;
+                    setOutput(temp);
+                }
+            }
+        } else if ( output.indexOf('-') >= 0 ) {
+            if ( data === '-' ) {
+                if ( outputArr[1].length >= 1 ) {
+                    // 执行计算
+                    const result = parseFloat(outputArr[0]) - parseFloat(outputArr[1]);
+                    setOutputArr([`${ result }`, '']);
+                    setOutput(`${ result }`);
+                }
+            } else if ( data === '+' ) {
+                // 执行加号替换
+                // 判断 outputArr的是否有长度，有则计算，并在计算好的值后面增加 - 号,否则替换
+                if(outputArr[1].length >= 1) {
+                    const result = parseFloat(outputArr[0]) - parseFloat(outputArr[1]);
+                    setOutputArr([`${ result }`, '']);
+                    setOutput(`${ result }+`);
+                }else {
+                    const temp = output.substr(0, output.length - 1) + data;
+                    setOutput(temp);
+                }
+            }
+            
+        } else {
+            // 没有增加过符号
+            setOutput(output + data);
+        }
+    };
+    const buttonDelegation = (e: React.MouseEvent) => {
+        const text = (e.target as HTMLLinkElement).textContent;
+        const value = text?.replace(/\s{1}/, '');
+        switch (value) {
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+            case '.':
+            case '+':
+            case '-':
+                
+                if ( outputArr[0].length < 10 ) {
+                    // 左边大于10，有符号则开始算
+                    if ( output === '0.00' ) {
+                        setOutput(value);
+                    } else {
+                        setOutput(output + value);
+                        setOutputArr([output + value, '']);
+                    }
+                } else if ( value === '+' || value === '-' ) {
+                    X(value);
+                } else if ( output.length >= 21 ) {
+                    return;
+                } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0 ) {
+                    setOutput(output + value);
+                    setOutputArr([outputArr[0], outputArr[1] + value]);
+                    setIsComputed(true);
+                }
+                break;
+            case '=':
+                console.log('计算结果');
+                break;
+            case '':
+                console.log('删除');
+                break;
+            case '今天':
+                console.log('今天');
+                break;
+            case '完成':
+                console.log('完成');
+                break;
+            
+        }
+    };
     return (
         <Wrapper className={ props.className }>
             <header>
@@ -106,13 +210,13 @@ const NumberPad = (props: any) => {
                     <span>备注：</span>
                     <input type="text"
                            defaultValue={ note }
-                           ref={refInput}
-                           onBlur={getInputValue}
+                           ref={ refInput }
+                           onBlur={ getInputValue }
                            placeholder="点击写备注..." />
                 </label>
-                <div>3456789.12+3456789.12</div>
+                <div style={ { fontFamily: 'monospace' } }>{ output }</div>
             </header>
-            <main>
+            <main onClick={ buttonDelegation }>
                 <Button activeClassName="activeBtn" className="btn">7</Button>
                 <Button activeClassName="activeBtn" className="btn">8</Button>
                 <Button activeClassName="activeBtn" className="btn">9</Button>
@@ -141,7 +245,7 @@ const NumberPad = (props: any) => {
                                          height: '1.4em'
                                      } } /> }>
                 </Button>
-                <Button activeClassName="activeBtn" className="btn">完成</Button>
+                <Button activeClassName="activeBtn" className="btn">{ isComputed ? '=' : '完成' }</Button>
             </main>
         </Wrapper>
     );
