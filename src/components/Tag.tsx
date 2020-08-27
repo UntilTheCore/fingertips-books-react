@@ -43,8 +43,11 @@ const Tag = (props: Props) => {
     return (
         <div onClick={onClickMe}>
             <TagSection>
-                <div>
-                    <Icon name={ props.iconName } />
+                <div className={props.isSelected ? 'selected' : ''}>
+                    <Icon name={ props.iconName } style={{
+                        width: '2em',
+                        height: '2em'
+                    }} />
                 </div>
                 <span>{ props.tagTitle }</span>
             </TagSection>
