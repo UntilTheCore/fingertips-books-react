@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 type Props = {
-    type: string
+    defaultType: '-'|'+'
 }
 
-const TypesSection = styled.section`
+const TypesSection: React.FC = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,10 +28,18 @@ const TypesSection = styled.section`
 `;
 
 const Types = (props: Props) => {
+    const categoryMap = { '-': '支出', '+': '收入' };
+    type categoryType = keyof typeof categoryMap
+    const [categoryList] = useState<categoryType[]>(['-', '+']);
+    const [category,setCategory] = useState(props.defaultType)
+    const getType = (type: categoryType) => {
+        setCategory(type)
+    }
     return (
         <TypesSection>
-            <div className={props.type === '-' ? 'selected' : ''}>支出</div>
-            <div className={props.type === '+' ? 'selected' : ''}>收入</div>
+            { categoryList.map(c => {
+                return <div key={c} onClick={() => getType(c)} className={ category === c ? 'selected' : '' }>{categoryMap[c]}</div>;
+            }) }
         </TypesSection>
     );
 };
