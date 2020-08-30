@@ -74,9 +74,11 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.2",
     "@types/webpack-env": "^1.15.2",
+    "babel-plugin-import": "^1.13.0",
     "customize-cra": "^1.0.0",
     "node-sass": "npm:dart-sass",
     "react-app-rewired": "^2.1.6",
+    "react-scripts": "^3.4.3",
     "svg-sprite-loader": "^5.0.0",
     "svgo-loader": "^2.2.1"
   },
