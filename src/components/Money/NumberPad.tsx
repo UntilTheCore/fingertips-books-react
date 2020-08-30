@@ -111,16 +111,16 @@ const NumberPad = (props: any) => {
                     // 执行计算
                     const result = parseFloat(outputArr[0]) + parseFloat(outputArr[1]);
                     setOutputArr([`${ result }`, '']);
-                    setOutput(`${ result }`);
+                    setOutput(`${ result.toFixed(2) }+`);
                 }
             } else if ( data === '-' ) {
                 // 执行加号替换
                 // 判断 outputArr的是否有长度，有则计算，并在计算好的值后面增加 - 号,否则替换
-                if(outputArr[1].length >= 1) {
+                if ( outputArr[1].length >= 1 ) {
                     const result = parseFloat(outputArr[0]) + parseFloat(outputArr[1]);
                     setOutputArr([`${ result }`, '']);
-                    setOutput(`${ result }-`);
-                }else {
+                    setOutput(`${ result.toFixed(2) }-`);
+                } else {
                     const temp = output.substr(0, output.length - 1) + data;
                     setOutput(temp);
                 }
@@ -131,16 +131,16 @@ const NumberPad = (props: any) => {
                     // 执行计算
                     const result = parseFloat(outputArr[0]) - parseFloat(outputArr[1]);
                     setOutputArr([`${ result }`, '']);
-                    setOutput(`${ result }`);
+                    setOutput(`${ result.toFixed(2) }-`);
                 }
             } else if ( data === '+' ) {
                 // 执行加号替换
                 // 判断 outputArr的是否有长度，有则计算，并在计算好的值后面增加 - 号,否则替换
-                if(outputArr[1].length >= 1) {
+                if ( outputArr[1].length >= 1 ) {
                     const result = parseFloat(outputArr[0]) - parseFloat(outputArr[1]);
                     setOutputArr([`${ result }`, '']);
-                    setOutput(`${ result }+`);
-                }else {
+                    setOutput(`${ result.toFixed(2) }+`);
+                } else {
                     const temp = output.substr(0, output.length - 1) + data;
                     setOutput(temp);
                 }
@@ -168,11 +168,18 @@ const NumberPad = (props: any) => {
             case '.':
             case '+':
             case '-':
-                
                 if ( outputArr[0].length < 10 ) {
                     // 左边大于10，有符号则开始算
                     if ( output === '0.00' ) {
                         setOutput(value);
+                    } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0) {
+                        if ( value === '+' || value === '-'  ) {
+                            X(value);
+                        } else {
+                            setOutput(output + value);
+                            setOutputArr([outputArr[0], outputArr[1] + value]);
+                            setIsComputed(true);
+                        }
                     } else {
                         setOutput(output + value);
                         setOutputArr([output + value, '']);
