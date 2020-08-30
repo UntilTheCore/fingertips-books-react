@@ -101,51 +101,27 @@ const NumberPad = (props: any) => {
     const [isComputed, setIsComputed] = useState(false);
     const [output, setOutput] = useState('0.00');
     const [outputArr, setOutputArr] = useState(['', '']);
+    // 通过符号设置数据
+    const setDataBySym = (data: string, value: number) => {
+        // 已有一个 + 号存在，判断 + 号后面是否有数字，有则计算之前的并在最后面加上 + 号
+        if ( outputArr[1].length >= 1 ) {
+            // 执行计算
+            setOutputArr([`${ value }`, '']);
+            setOutput(`${ value.toFixed(2) }${ data }`);
+        } else {
+            setOutput(output.substr(0, output.length - 1) + data);
+        }
+    };
     const X = (data: string) => {
         // 停止加入左边，开始加入右边
         // 点击加号后将+字符串放入 output，
         if ( output.indexOf('+') >= 0 ) {
-            if ( data === '+' ) {
-                // 已有一个 + 号存在，判断 + 号后面是否有数字，有则计算之前的并在最后面加上 + 号
-                if ( outputArr[1].length >= 1 ) {
-                    // 执行计算
-                    const result = parseFloat(outputArr[0]) + parseFloat(outputArr[1]);
-                    setOutputArr([`${ result }`, '']);
-                    setOutput(`${ result.toFixed(2) }+`);
-                }
-            } else if ( data === '-' ) {
-                // 执行加号替换
-                // 判断 outputArr的是否有长度，有则计算，并在计算好的值后面增加 - 号,否则替换
-                if ( outputArr[1].length >= 1 ) {
-                    const result = parseFloat(outputArr[0]) + parseFloat(outputArr[1]);
-                    setOutputArr([`${ result }`, '']);
-                    setOutput(`${ result.toFixed(2) }-`);
-                } else {
-                    const temp = output.substr(0, output.length - 1) + data;
-                    setOutput(temp);
-                }
-            }
+            const result = parseFloat(outputArr[0]) + parseFloat(outputArr[1]);
+            setDataBySym(data, result);
         } else if ( output.indexOf('-') >= 0 ) {
-            if ( data === '-' ) {
-                if ( outputArr[1].length >= 1 ) {
-                    // 执行计算
-                    const result = parseFloat(outputArr[0]) - parseFloat(outputArr[1]);
-                    setOutputArr([`${ result }`, '']);
-                    setOutput(`${ result.toFixed(2) }-`);
-                }
-            } else if ( data === '+' ) {
-                // 执行加号替换
-                // 判断 outputArr的是否有长度，有则计算，并在计算好的值后面增加 - 号,否则替换
-                if ( outputArr[1].length >= 1 ) {
-                    const result = parseFloat(outputArr[0]) - parseFloat(outputArr[1]);
-                    setOutputArr([`${ result }`, '']);
-                    setOutput(`${ result.toFixed(2) }+`);
-                } else {
-                    const temp = output.substr(0, output.length - 1) + data;
-                    setOutput(temp);
-                }
-            }
-            
+            // 本身是减法，要先减了再做其他的
+            const result = parseFloat(outputArr[0]) - parseFloat(outputArr[1]);
+            setDataBySym(data, result);
         } else {
             // 没有增加过符号
             setOutput(output + data);
@@ -172,8 +148,8 @@ const NumberPad = (props: any) => {
                     // 左边大于10，有符号则开始算
                     if ( output === '0.00' ) {
                         setOutput(value);
-                    } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0) {
-                        if ( value === '+' || value === '-'  ) {
+                    } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0 ) {
+                        if ( value === '+' || value === '-' ) {
                             X(value);
                         } else {
                             setOutput(output + value);
