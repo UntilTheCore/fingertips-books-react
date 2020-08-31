@@ -194,7 +194,6 @@ const NumberPad = (props: any) => {
         const {left,right=''} = outputArrValue
         setOutput(outputValue);
         left && setOutputArr([left, right]);
-        console.log(isComputed);
         isComputed ? setIsComputed(true) : setIsComputed(false)
     }
     
@@ -296,7 +295,15 @@ const NumberPad = (props: any) => {
                 }
                 break;
             case '=':
-                console.log('计算结果');
+                if(output.indexOf('+') >= 0) {
+                    // 执行加法
+                    const result = (parseFloat(outputArr[0]) + parseFloat(outputArr[1])).toFixed(2);
+                    setValue(result,{left:result})
+                }else if(output.indexOf('-') >= 0) {
+                    // 执行减法
+                    const result = (parseFloat(outputArr[0]) - parseFloat(outputArr[1])).toFixed(2)
+                    setValue(result,{left:result})
+                }
                 break;
             case '':
                 console.log('删除');
@@ -305,7 +312,9 @@ const NumberPad = (props: any) => {
                 console.log('今天');
                 break;
             case '完成':
+                // 这个逻辑表示用户输入的数据都已完成，可以记录这一笔数据到数据库中
                 console.log('完成');
+                
                 break;
             
         }
