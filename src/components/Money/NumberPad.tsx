@@ -91,7 +91,9 @@ const Wrapper = styled.div`
     }
     
 `;
+type symbolTypes = '+' | '-';
 const NumberPad = (props: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [note, setNote] = useState('');
     const refInput = useRef<HTMLInputElement>(null);
     const getInputValue = () => {
@@ -102,17 +104,17 @@ const NumberPad = (props: any) => {
     const [output, setOutput] = useState('0.00');
     const [outputArr, setOutputArr] = useState(['', '']);
     // 通过符号设置数据
-    const setDataBySym = (data: string, value: number) => {
+    const setDataBySym = (data: symbolTypes, value: number) => {
         // 已有一个 + 号存在，判断 + 号后面是否有数字，有则计算之前的并在最后面加上 + 号
         if ( outputArr[1].length >= 1 ) {
             // 执行计算
-            setOutputArr([`${ value }`, '']);
+            setOutputArr([`${ value.toFixed(2) }`, '']);
             setOutput(`${ value.toFixed(2) }${ data }`);
         } else {
             setOutput(output.substr(0, output.length - 1) + data);
         }
     };
-    const X = (data: string) => {
+    const calculate = (data: symbolTypes) => {
         // 停止加入左边，开始加入右边
         // 点击加号后将+字符串放入 output，
         if ( output.indexOf('+') >= 0 ) {
@@ -148,10 +150,36 @@ const NumberPad = (props: any) => {
                     // 左边大于10，有符号则开始算
                     if ( output === '0.00' ) {
                         setOutput(value);
-                    } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0 ) {
-                        if ( value === '+' || value === '-' ) {
-                            X(value);
+                    }
+                    else if ( value === '.' ) {
+                        // 长度大于 8
+                        if ( outputArr[0].length >= 7 ) {
+                            return;
+                        } else if ( String(outputArr[0]).indexOf('.') >= 0 ) {
+                            // 符号是 . ，判断是否已经存在过 . 了
+                            // 左边有小数了，那么看看右边是否有数据，没有则返回
+                            if ( outputArr[1].length < 1 ) {
+                                return;
+                            } else if ( String(outputArr[1]).indexOf('.') >= 0 ) {
+                                return;
+                            } else {
+                                // 给右边设置数据
+                                setOutput(output + value);
+                                setOutputArr([outputArr[0], outputArr[1] + value]);
+                            }
                         } else {
+                            setOutput(output + value);
+                            setOutputArr([outputArr[0] + value, '']);
+                        }
+                        
+                        
+                    } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0 ) {
+                        // 输入的是加减号，执行计算
+                        if ( value === '+' || value === '-' ) {
+                            calculate(value);
+                        } else {
+                            console.log('hear');
+                            // 不是加减号，则数字继续向后添加
                             setOutput(output + value);
                             setOutputArr([outputArr[0], outputArr[1] + value]);
                             setIsComputed(true);
@@ -161,7 +189,7 @@ const NumberPad = (props: any) => {
                         setOutputArr([output + value, '']);
                     }
                 } else if ( value === '+' || value === '-' ) {
-                    X(value);
+                    calculate(value);
                 } else if ( output.length >= 21 ) {
                     return;
                 } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0 ) {
