@@ -106,27 +106,43 @@ const NumberPad = (props: any) => {
     // 通过符号设置数据
     const setDataBySym = (data: symbolTypes, value: number) => {
         // 已有一个 + 号存在，判断 + 号后面是否有数字，有则计算之前的并在最后面加上 + 号
-        if ( outputArr[1].length >= 1 ) {
-            // 执行计算
-            setOutputArr([`${ value.toFixed(2) }`, '']);
-            setOutput(`${ value.toFixed(2) }${ data }`);
-        } else {
-            setOutput(output.substr(0, output.length - 1) + data);
-        }
+        setOutputArr([`${ value.toFixed(2) }`, '']);
+        setOutput(`${ value.toFixed(2) }${ data }`);
     };
-    const calculate = (data: symbolTypes) => {
+    // 值计算和符号替换
+    const calculate = (data: symbolTypes): void => {
         // 停止加入左边，开始加入右边
         // 点击加号后将+字符串放入 output，
-        if ( output.indexOf('+') >= 0 ) {
-            const result = parseFloat(outputArr[0]) + parseFloat(outputArr[1]);
-            setDataBySym(data, result);
-        } else if ( output.indexOf('-') >= 0 ) {
-            // 本身是减法，要先减了再做其他的
-            const result = parseFloat(outputArr[0]) - parseFloat(outputArr[1]);
-            setDataBySym(data, result);
+        console.log('outputarr================');
+        console.log(outputArr);
+        console.log('outputarr================');
+        if ( outputArr[1].length >= 1 ) {
+            if ( output.indexOf('+') >= 0 ) {
+                const left = parseFloat(outputArr[0]);
+                console.log('left============');
+                console.log(left);
+                console.log('left============');
+                
+                console.log('right============');
+                const right = parseFloat(outputArr[1]);
+                console.log(right);
+                console.log('right============');
+                // const result = parseFloat((parseFloat(outputArr[0]) + parseFloat(outputArr[1])).toFixed(2));
+                let amount = left + right;
+                const result = amount.toFixed(2);
+                amount = parseFloat(result);
+                
+                console.log(amount);
+                setDataBySym(data, amount);
+            } else if ( output.indexOf('-') >= 0 ) {
+                // 本身是减法，要先减了再做其他的
+                const result = parseFloat((parseFloat(outputArr[0]) - parseFloat(outputArr[1])).toFixed(2));
+                console.log(result);
+                setDataBySym(data, result);
+            }
         } else {
-            // 没有增加过符号
-            setOutput(output + data);
+            console.log('替换');
+            setOutput(output.substr(0, output.length - 1) + data);
         }
     };
     const buttonDelegation = (e: React.MouseEvent) => {
@@ -149,11 +165,15 @@ const NumberPad = (props: any) => {
                 if ( outputArr[0].length < 10 ) {
                     // 左边大于10，有符号则开始算
                     if ( output === '0.00' ) {
+                        // 在 0.00 的情况下，直接输入 . 则什么都不做
+                        if ( value === '.' || value === '+' || value === '-') {
+                            return;
+                        }
                         setOutput(value);
-                    }
-                    else if ( value === '.' ) {
-                        // 长度大于 8
-                        if ( outputArr[0].length >= 7 ) {
+                        setOutputArr([value, '']);
+                    } else if ( value === '.' ) {
+                        // 左值长度大于 8
+                        if ( outputArr[0].length >= 8 ) {
                             return;
                         } else if ( String(outputArr[0]).indexOf('.') >= 0 ) {
                             // 符号是 . ，判断是否已经存在过 . 了
@@ -166,12 +186,30 @@ const NumberPad = (props: any) => {
                                 return;
                             } else {
                                 // 给右边设置数据
+                                console.log('...=================');
                                 setOutput(output + value);
+                                console.log('...=================');
                                 setOutputArr([outputArr[0], outputArr[1] + value]);
                             }
                         } else {
-                            setOutput(output + value);
-                            setOutputArr([outputArr[0] + value, '']);
+                            const result = output + value
+                            // 如果有符号了，则只赋值右值
+                            if(output.indexOf('+') >= 0 || output.indexOf('-') >= 0) {
+                                if(outputArr[1].length < 1) {
+                                    return;
+                                }else if(outputArr[1].indexOf('.') >= 0) {
+                                        return;
+                                } else {
+                                    console.log('...=================');
+                                    console.log(result);
+                                    console.log('...=================');
+                                    setOutput(result);
+                                    setOutputArr([outputArr[0],outputArr[1]+value])
+                                }
+                            }else {
+                                setOutput(result);
+                                setOutputArr([outputArr[0] + value, '']);
+                            }
                         }
                     } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0 ) {
                         // 输入的是加减号，执行计算
@@ -181,23 +219,142 @@ const NumberPad = (props: any) => {
                             // 阻止右侧小数精度超过小数点后2位
                             return;
                         } else {
+                            // 阻止右值第一次输入0后还输入其他值，只允许输入小数
+                            if ( outputArr[1].length >= 1 && value === '0' && outputArr[1].indexOf('.') === -1 ) {
+                                return;
+                            } else if ( outputArr[1].length === 1 && outputArr[1][0] === '0' ) {
+                                // 第一个数是0，则替换掉
+                                const result = output.substr(0, output.length - 1) + value;
+                                console.log('+-符号=====================');
+                                console.log(result);
+                                console.log('+-符号=====================');
+                                setOutput(result);
+                                setOutputArr([outputArr[0], value]);
+                                return;
+                            }
                             // 不是加减号，则数字继续向后添加
-                            setOutput(output + value);
+                            const result = output + value
+                            console.log('+-符号=====================');
+                            console.log(result);
+                            console.log('+-符号=====================');
+                            setOutput(result);
                             setOutputArr([outputArr[0], outputArr[1] + value]);
                             setIsComputed(true);
                         }
                     } else {
-                        setOutput(output + value);
-                        setOutputArr([output + value, '']);
+                        // 处理左值小数点过长的问题
+                        if ( outputArr[0].split('.')[1]?.length >= 2 ) {
+                            // 解决左边输入小数超过2个精度的问题
+                            // 是符号就在后面加上符号，不是符号则禁止输入
+                            if ( value === '+' || value === '-' ) {
+                                console.log('hehe');
+                                setOutput(output + value);
+                                // setOutputArr([output + value, '']);
+                            } else {
+                                return;
+                            }
+                        }
+                        
+                        // 处理左侧没有小数点时连续输入 0 的情况
+                        if ( outputArr[0].length === 1 && outputArr[0][0] === '0' ) {
+                            // 如果第一个数是0，进来了操作符，那么就追加数据，不替换，也不改变数组内数据
+                            if(value === '+' || value === '-') {
+                                const result = output + value;
+                                setOutput(result)
+                            }else {
+                                // 第一个数是0，则替换掉
+                                const result = output.substr(0, output.length - 1) + value;
+                                console.log('no left===================');
+                                console.log(result);
+                                console.log('no left===================');
+                                setOutput(result);
+                                setOutputArr([result, '']);
+                            }
+                            return;
+                        }
+                        // 解决左值输入 0.00 时和其他其他判断逻辑发生冲突的问题
+                        let result = output + value
+                        console.log(result);
+                        if(result === '0.00') {
+                            result = '0'
+                        }
+                        setOutput(result);
+                        setOutputArr([result, '']);
                     }
-                } else if ( value === '+' || value === '-' ) {
-                    calculate(value);
-                } else if ( output.length >= 21 ) {
+                } else if ( output.length >= 20 ) {
+                    // 超长数不再继续允许继续输入
+                    console.log('too long ');
                     return;
+                }else if(value === '.') {
+                    // 左值长度大于 8
+                     if ( String(outputArr[0]).indexOf('.') >= 0 ) {
+                        // 符号是 . ，判断是否已经存在过 . 了
+                        // 左边有小数了，那么看看右边是否有数据，没有则返回
+                        if ( outputArr[1].length < 1 ) {
+                            // 右边没有值
+                            return;
+                        } else if ( String(outputArr[1]).indexOf('.') >= 0 ) {
+                            // 右边含有小数
+                            return;
+                        } else {
+                            // 给右边设置数据
+                            console.log('...=================');
+                            setOutput(output + value);
+                            console.log('...=================');
+                            setOutputArr([outputArr[0], outputArr[1] + value]);
+                        }
+                    } else {
+                        const result = output + value
+                        // 如果有符号了，则只赋值右值
+                        if(output.indexOf('+') >= 0 || output.indexOf('-') >= 0) {
+                            if(outputArr[1].length < 1) {
+                                return;
+                            }else if(outputArr[1].indexOf('.') >= 0) {
+                                return;
+                            } else {
+                                console.log('...=================');
+                                console.log(result);
+                                console.log('...=================');
+                                setOutput(result);
+                                setOutputArr([outputArr[0],outputArr[1]+value])
+                            }
+                        }else {
+                            setOutput(result);
+                            setOutputArr([outputArr[0] + value, '']);
+                        }
+                    }
+                } else if( value === '+' || value === '-' ) {
+                    // 必须在判断符号前执行这里的判断
+                    calculate(value);
                 } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0 ) {
-                    setOutput(output + value);
-                    setOutputArr([outputArr[0], outputArr[1] + value]);
-                    setIsComputed(true);
+                    // 此处控制左值长度大于10时的右值输入
+                    if ( outputArr[1].split('.')[1]?.length >= 2 ) {
+                        // 阻止右侧小数精度超过小数点后2位
+                        return;
+                    } else {
+                        // 阻止右值第一次输入0后还输入其他值，只允许输入小数
+                        if ( outputArr[1].length >= 1 && value === '0' && outputArr[1].indexOf('.') === -1 ) {
+                            return;
+                        } else if ( outputArr[1].length === 1 && outputArr[1][0] === '0' ) {
+                            // 第一个数是0，则替换掉
+                            const result = output.substr(0, output.length - 1) + value;
+                            console.log('+-符号=====================');
+                            console.log(result);
+                            console.log('+-符号=====================');
+                            setOutput(result);
+                            setOutputArr([outputArr[0], value]);
+                            return;
+                        }
+                        // 不是加减号，则数字继续向后添加
+                        const result = output + value
+                        console.log('+-符号=====================');
+                        console.log(result);
+                        console.log('+-符号=====================');
+                        setOutput(result);
+                        setOutputArr([outputArr[0], outputArr[1] + value]);
+                        setIsComputed(true);
+                    }
+                } else {
                 }
                 break;
             case '=':
