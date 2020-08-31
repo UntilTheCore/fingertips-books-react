@@ -159,8 +159,10 @@ const NumberPad = (props: any) => {
                             // 符号是 . ，判断是否已经存在过 . 了
                             // 左边有小数了，那么看看右边是否有数据，没有则返回
                             if ( outputArr[1].length < 1 ) {
+                                // 右边没有值
                                 return;
                             } else if ( String(outputArr[1]).indexOf('.') >= 0 ) {
+                                // 右边含有小数
                                 return;
                             } else {
                                 // 给右边设置数据
@@ -171,14 +173,14 @@ const NumberPad = (props: any) => {
                             setOutput(output + value);
                             setOutputArr([outputArr[0] + value, '']);
                         }
-                        
-                        
                     } else if ( output.indexOf('+') >= 0 || output.indexOf('-') >= 0 ) {
                         // 输入的是加减号，执行计算
                         if ( value === '+' || value === '-' ) {
                             calculate(value);
+                        } else if ( outputArr[1].split('.')[1]?.length >= 2 ) {
+                            // 阻止右侧小数精度超过小数点后2位
+                            return;
                         } else {
-                            console.log('hear');
                             // 不是加减号，则数字继续向后添加
                             setOutput(output + value);
                             setOutputArr([outputArr[0], outputArr[1] + value]);
