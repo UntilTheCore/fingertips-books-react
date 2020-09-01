@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Icon from '../Icon';
-import { Button } from 'antd-mobile';
+import { Button, DatePicker } from 'antd-mobile';
 
 const Wrapper = styled.div`
     max-width: 100vw;
@@ -60,9 +60,12 @@ const Wrapper = styled.div`
     > main {
         display: flex;
         flex-wrap: wrap;
+        
         > .btn {
             width: 25%;
-            
+        }
+        
+        .btn {
             border-radius: 0;
             background-color: inherit;
             // 圆角被按钮的before控制
@@ -88,6 +91,26 @@ const Wrapper = styled.div`
                 background: #e1e1e1;
             }
         }
+        
+        /* 由于antd的DatePicker会在按钮外部多增加一个div，所以这里需要额外的样式设置
+          并清除一些antD带来的样式
+        */
+        > div {
+            width: 25%;
+            > .btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: normal;
+                font-size: 16px;
+                > div {
+                    margin-right: 4px;
+                }
+                > span {
+                    line-height: 0;
+                }
+            }
+        }
     }
     
 `;
@@ -109,6 +132,7 @@ const NumberPad = (props: any) => {
     const [isComputed, setIsComputed] = useState(false);
     const [output, setOutput] = useState('0.00');
     const [outputArr, setOutputArr] = useState(['', '']);
+    const [time,setTime] = useState<string>('')
     // 通过符号设置数据
     const setDataBySym = (data: symbolTypes, value: number) => {
         // 已有一个 + 号存在，判断 + 号后面是否有数字，有则计算之前的并在最后面加上 + 号
@@ -350,14 +374,17 @@ const NumberPad = (props: any) => {
                 <Button activeClassName="activeBtn" className="btn">7</Button>
                 <Button activeClassName="activeBtn" className="btn">8</Button>
                 <Button activeClassName="activeBtn" className="btn">9</Button>
-                <Button activeClassName="activeBtn" className="btn"
-                        icon={ <Icon name='date' style={ {
-                            width: '1.2em',
-                            height: '1.2em',
-                            marginRight: '4px'
-                        } } /> }>
-                    今天
-                </Button>
+                <DatePicker
+                    mode="datetime"
+                    value={new Date()}
+                    title='选择日期'
+                    onOk={val => setTime(val.toISOString().split('T')[0])}
+                >
+                    <Button activeClassName="activeBtn" className='btn'>
+                        {time === '' ? <Icon name='date' style={{width:'1.4em',height:'1.4em'}}/> : time}
+                        {time === '' ? '今天' : ''}
+                    </Button>
+                </DatePicker>
                 <Button activeClassName="activeBtn" className="btn">4</Button>
                 <Button activeClassName="activeBtn" className="btn">5</Button>
                 <Button activeClassName="activeBtn" className="btn">6</Button>
