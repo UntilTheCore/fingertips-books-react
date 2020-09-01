@@ -306,13 +306,26 @@ const NumberPad = (props: any) => {
                 }
                 break;
             case '':
-                console.log('删除');
+                // 操作 output ，有运算符，则以运算符拆分后分别将内容防止 outputArr 内
+                const result = output.substr(0,output.length-1)
+                if(result.indexOf('+') >= 0) {
+                    const outputArrResult: string[] = result.split('+')
+                    setValue(result,{left:outputArrResult[0],right:outputArrResult[1]},true)
+                }else if(result.indexOf('-') >= 0) {
+                    const outputArrResult: string[] = result.split('-')
+                    setValue(result,{left:outputArrResult[0],right:outputArrResult[1]},true)
+                } else if(result.length < 1){
+                    setValue('0.00',{left:'0'})
+                }else {
+                    setValue(result,{left:result})
+                }
                 break;
             case '今天':
                 console.log('今天');
                 break;
             case '完成':
                 // 这个逻辑表示用户输入的数据都已完成，可以记录这一笔数据到数据库中
+                // 去 outputArr[0]中的数据来保存，为了防止意外，判断判断是否含有运算符，有则删除
                 console.log('完成');
                 
                 break;
