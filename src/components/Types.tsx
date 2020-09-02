@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-type Props = {
-    defaultType: '-'|'+'
-}
 
 const TypesSection: React.FC = styled.section`
     display: flex;
@@ -27,13 +24,17 @@ const TypesSection: React.FC = styled.section`
     }
 `;
 
-const Types = (props: Props) => {
-    const categoryMap = { '-': '支出', '+': '收入' };
-    type categoryType = keyof typeof categoryMap
+const categoryMap = { '-': '支出', '+': '收入' };
+type categoryType = keyof typeof categoryMap
+type Props = {
+    defaultType: categoryType,
+    onChange: (value: categoryType) => void,
+}
+const Types: React.FC<Props> = (props) => {
     const [categoryList] = useState<categoryType[]>(['-', '+']);
-    const [category,setCategory] = useState(props.defaultType)
+    const category = props.defaultType;
     const getType = (type: categoryType) => {
-        setCategory(type)
+        props.onChange(type)
     }
     return (
         <TypesSection>
