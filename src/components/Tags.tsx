@@ -19,6 +19,7 @@ const Tags: React.FC<Props> = (props) => {
         if(selectedTag === tagId) {
             // 自己被再次点击，则取消选中状态
            setSelectedTag('')
+            props.onChange('')
         }else{
             // 标签被选中了
             setSelectedTag(tagId);

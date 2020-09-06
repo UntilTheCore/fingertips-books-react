@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Icon from '../Icon';
-import { Button, DatePicker } from 'antd-mobile';
-import { equalSignal } from 'components/Money/numberPad/numberPad';
+import { Button } from 'antd-mobile';
+import { equalSignal, getCharCount } from 'components/Money/numberPad/numberPad';
 import Wrapper from './numberPad/Wrapper';
 import dayjs from 'dayjs';
 
@@ -11,17 +11,16 @@ type outputArrType = {
     right?: string,
 }
 type Props = {
-    isOk: (note: string, amount: string, date: string) => void
+    isOk: (note: string, amount: string) => void,
+    selectedTime: Date,
+    calendarShow: (isShow: boolean) => void,
 }
-const nowTimeStamp = Date.now();
-let minDate = new Date(nowTimeStamp - 60e7);
-const maxDate = new Date(nowTimeStamp + 30e7);
+
 const NumberPad: React.FC<Props> = (props) => {
     const [note, setNote] = useState('');
     const [isComputed, setIsComputed] = useState(false);
     const [output, setOutput] = useState('0.00');
     const [outputArr, setOutputArr] = useState(['0.00', '']);
-    const [time, setTime] = useState<Date>(new Date());
     
     const refInput = useRef<HTMLInputElement>(null);
     const getInputValue = () => {
@@ -223,7 +222,12 @@ const NumberPad: React.FC<Props> = (props) => {
     
     const buttonDelegation = (e: React.MouseEvent) => {
         const text = (e.target as HTMLLinkElement).textContent;
-        const value = text?.replace(/\s{1}/, '');
+        let value = text?.replace(/\s{1}/, '');
+        if ( value ) {
+            if ( getCharCount(value, '-') >= 2 ) {
+                value = '今天';
+            }
+        }
         switch (value) {
             case '0':
             case '1':
@@ -247,11 +251,17 @@ const NumberPad: React.FC<Props> = (props) => {
             case '':
                 backspace();
                 break;
+            case '今天':
+                props.calendarShow(true);
+                break;
             case '完成':
                 // 这个逻辑表示用户输入的数据都已完成，可以记录这一笔数据到数据库中
                 // 去 outputArr[0]中的数据来保存，为了防止意外，判断判断是否含有运算符，有则删除
-                console.log('完成');
-                
+                let amount = outputArr[0];
+                if ( amount.indexOf('+') >= 0 || amount.indexOf('-') >= 0 ) {
+                    amount = amount.slice(amount.length - 1);
+                }
+                props.isOk(note, amount);
                 break;
             
         }
@@ -274,17 +284,12 @@ const NumberPad: React.FC<Props> = (props) => {
                 <Button activeClassName="activeBtn" className="btn">7</Button>
                 <Button activeClassName="activeBtn" className="btn">8</Button>
                 <Button activeClassName="activeBtn" className="btn">9</Button>
-                <DatePicker
-                    mode="datetime"
-                    value={new Date()}
-                    title='选择日期'
-                    onOk={val => setTime(val.toISOString().split('T')[0])}
-                >
-                    <Button activeClassName="activeBtn" className='btn'>
-                        {time === '' ? <Icon name='date' style={{width:'1.4em',height:'1.4em'}}/> : time}
-                        {time === '' ? '今天' : ''}
-                    </Button>
-                </DatePicker>
+                <Button activeClassName="activeBtn" className='btn'>
+                    { dayjs(props.selectedTime).format('YYYY-MM-DD') === dayjs(new Date()).format('YYYY-MM-DD') ?
+                        <Icon name='date' style={ { width: '1.4em', height: '1.4em' } } /> :
+                        dayjs(props.selectedTime).format('YYYY-MM-DD') }
+                    { dayjs(props.selectedTime).format('YYYY-MM-DD') === dayjs(new Date()).format('YYYY-MM-DD') ? '今天' : '' }
+                </Button>
                 <Button activeClassName="activeBtn" className="btn">4</Button>
                 <Button activeClassName="activeBtn" className="btn">5</Button>
                 <Button activeClassName="activeBtn" className="btn">6</Button>
