@@ -15,8 +15,7 @@ type Props = {
     selectedTime: Date,
     calendarShow: (isShow: boolean) => void,
 }
-
-const NumberPad: React.FC<Props> = React.forwardRef((props,ref) => {
+const NumberPad: React.FC<Props> = React.forwardRef((props, ref) => {
     const [note, setNote] = useState('');
     const [isComputed, setIsComputed] = useState(false);
     const [output, setOutput] = useState('0.00');
@@ -221,12 +220,15 @@ const NumberPad: React.FC<Props> = React.forwardRef((props,ref) => {
     }
     
     const buttonDelegation = (e: React.MouseEvent) => {
-        const text = (e.target as HTMLLinkElement).textContent;
+        const el = e.target as HTMLLinkElement;
+        const text = el.textContent;
         let value = text?.replace(/\s{1}/, '');
         if ( value ) {
             if ( getCharCount(value, '-') >= 2 ) {
                 value = '今天';
             }
+        } else if ( el.tagName.toLowerCase() === 'svg' || el.tagName.toLowerCase() === 'use' ) {
+            value = '今天';
         }
         switch (value) {
             case '0':
