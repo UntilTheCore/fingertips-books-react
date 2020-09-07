@@ -44,6 +44,7 @@ const Money = () => {
                                            Toast.info('请选择标签', 1);
                                            return;
                                        }
+                                       console.log(selectedType,selectedTag,selectedTime,note,amount);
                                    } }
                                    calendarShow={ (value) => {
                                        setCalendarShow(value);

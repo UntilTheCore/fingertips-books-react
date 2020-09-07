@@ -16,7 +16,7 @@ type Props = {
     calendarShow: (isShow: boolean) => void,
 }
 
-const NumberPad: React.FC<Props> = (props) => {
+const NumberPad: React.FC<Props> = React.forwardRef((props,ref) => {
     const [note, setNote] = useState('');
     const [isComputed, setIsComputed] = useState(false);
     const [output, setOutput] = useState('0.00');
@@ -311,6 +311,6 @@ const NumberPad: React.FC<Props> = (props) => {
             </main>
         </Wrapper>
     );
-};
+});
 
 export default NumberPad;
