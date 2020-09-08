@@ -5,7 +5,8 @@ import NumberPad from '../components/Money/NumberPad';
 import QueueAnim from 'rc-queue-anim';
 import Layout from '../components/Layout';
 import { Calendar, Toast } from 'antd-mobile';
-import { useTags } from '../components/useTags';
+import { useTags } from '../hooks/useTags';
+import { useRecord } from '../hooks/useRecord';
 
 const todayStamp = Date.parse(new Date().toISOString().split('T')[0]);
 let minDate = new Date(todayStamp - 2592000000);
@@ -16,7 +17,28 @@ const Money = () => {
     const [calendarShow, setCalendarShow] = useState(false);
     const [selectedTime, setSelectedTime] = useState<Date>(new Date());
     const { tags } = useTags();
-    
+    const rc = useRecord();
+    const submit = (note: string, amount: string) => {
+        // 做点击完成按钮后的判断
+        if ( parseFloat(amount) === 0 ) {
+            Toast.fail('金额为0', 1);
+            return;
+        }
+        
+        if ( selectedTag === '' ) {
+            Toast.info('请选择标签', 1);
+            return;
+        }
+        // 保存数据
+        const record: RecordListItem = {
+            type: selectedType,
+            tag: selectedTag,
+            amount: amount,
+            note: note,
+            createAt: selectedTime.toISOString()
+        };
+        rc.addRecord(record);
+    };
     return (
         <div>
             <Layout
@@ -34,17 +56,7 @@ const Money = () => {
                     ] }>
                         <NumberPad key={ 'a' }
                                    isOk={ (note, amount) => {
-                                       // 做点击完成按钮后的判断
-                                       if ( parseFloat(amount) === 0 ) {
-                                           Toast.fail('金额为0', 1);
-                                           return;
-                                       }
-                            
-                                       if ( selectedTag === '' ) {
-                                           Toast.info('请选择标签', 1);
-                                           return;
-                                       }
-                                       console.log(selectedType,selectedTag,selectedTime,note,amount);
+                                       submit(note, amount);
                                    } }
                                    calendarShow={ (value) => {
                                        setCalendarShow(value);
