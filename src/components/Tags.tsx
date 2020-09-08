@@ -8,7 +8,7 @@ const TagsSection = styled.section`
 `;
 
 type Props = {
-    tags: Map<string,string>,
+    tags: { [key: string]: string } | undefined,
     onChange: (tagId: string) => void,
 }
 
@@ -26,10 +26,10 @@ const Tags: React.FC<Props> = (props) => {
             props.onChange(tagId)
         }
     };
-    props.tags.forEach((value, key) => {
+    for (let key in props.tags) {
         liArray.push(<Tag isSelected={ selectedTag === key } onClick={ () => onToggleTag(key) } key={ key }
-                          iconName={ key } tagTitle={ value } />);
-    });
+                          iconName={ key } tagTitle={ props.tags[key] } />);
+    }
     return (
         <TagsSection>
             { liArray }

@@ -5,8 +5,8 @@ import NumberPad from '../components/Money/NumberPad';
 import QueueAnim from 'rc-queue-anim';
 import Layout from '../components/Layout';
 import { Calendar, Toast } from 'antd-mobile';
-import { useTags } from '../hooks/useTags';
 import { useRecord } from '../hooks/useRecord';
+import { useTags } from '../hooks/useTags';
 
 const todayStamp = Date.parse(new Date().toISOString().split('T')[0]);
 let minDate = new Date(todayStamp - 2592000000);
@@ -16,7 +16,7 @@ const Money = () => {
     const [selectedTag, setSelectedTag] = useState('');
     const [calendarShow, setCalendarShow] = useState(false);
     const [selectedTime, setSelectedTime] = useState<Date>(new Date());
-    const { tags } = useTags();
+    const { tags } = useTags(selectedType);
     const rc = useRecord();
     const submit = (note: string, amount: string) => {
         // 做点击完成按钮后的判断
