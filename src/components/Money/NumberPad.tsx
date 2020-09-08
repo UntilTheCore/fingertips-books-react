@@ -226,9 +226,11 @@ const NumberPad: React.FC<Props> = React.forwardRef((props, ref) => {
         if ( value ) {
             if ( getCharCount(value, '-') >= 2 ) {
                 value = '今天';
+            } else if ( value === 'date' ) {
+                value = '今天';
+            } else if ( value === 'delete' ) {
+                value = '';
             }
-        } else if ( el.tagName.toLowerCase() === 'svg' || el.tagName.toLowerCase() === 'use' ) {
-            value = '今天';
         }
         switch (value) {
             case '0':

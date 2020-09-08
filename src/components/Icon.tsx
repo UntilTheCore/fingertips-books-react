@@ -28,7 +28,7 @@ const Icon = (props: Props) => {
     return (
         <Wrapper>
             <svg aria-hidden={ true } style={props.style}>
-                <use xlinkHref={ '#' + props.name }/>
+                <use xlinkHref={ '#' + props.name }>{ props.name }</use>
             </svg>
         </Wrapper>
     );
