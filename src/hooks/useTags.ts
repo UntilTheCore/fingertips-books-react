@@ -49,7 +49,7 @@ const expendHashTable = {
 const keyExpendName = 'expendTagList';
 const keyEarningName = 'earningTagList';
 // 此hook可用于后期自定义新增标签
-const useTags = (type: '+' | '-') => { // 创建自定义 Hook
+const useTags = (type: '+' | '-' | null) => { // 创建自定义 Hook
     const [expendTags, setExpendTags] = useState<{ [key: string]: string }>();
     const [earningTags, setEarningTags] = useState<{ [key: string]: string }>();
     useEffect(() => {
@@ -64,7 +64,13 @@ const useTags = (type: '+' | '-') => { // 创建自定义 Hook
         setExpendTags(JSON.parse(window.localStorage.getItem(keyExpendName) || '[]'));
         setEarningTags(JSON.parse(window.localStorage.getItem(keyEarningName) || '[]'));
     }, []);
-    return { tags: type === '-' ? expendTags : earningTags };
+    const findTagName = (tagId: string, type: '+' | '-') => {
+        return type === '-' ? (expendTags && expendTags[tagId]) : earningTags && earningTags[tagId];
+    };
+    return {
+        tags: type === '-' ? expendTags : earningTags,
+        findTagName
+    };
 };
 
 export { useTags };
