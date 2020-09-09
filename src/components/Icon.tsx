@@ -13,6 +13,7 @@ try {
 type Props = {
     name: string,
     style?: object,
+    onClick?: () => void,
 }
 
 const Wrapper: React.FC = styled.div`
@@ -24,10 +25,10 @@ const Wrapper: React.FC = styled.div`
     }
 `;
 
-const Icon = (props: Props) => {
+const Icon: React.FC<Props> = (props) => {
     return (
         <Wrapper>
-            <svg aria-hidden={ true } style={props.style}>
+            <svg onClick={ props.onClick } aria-hidden={ true } style={ props.style }>
                 <use xlinkHref={ '#' + props.name }>{ props.name }</use>
             </svg>
         </Wrapper>

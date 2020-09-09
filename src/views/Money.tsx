@@ -7,6 +7,8 @@ import Layout from '../components/Layout';
 import { Calendar, Toast } from 'antd-mobile';
 import { useRecord } from '../hooks/useRecord';
 import { useTags } from '../hooks/useTags';
+import styled from 'styled-components';
+import Icon from '../components/Icon';
 
 const todayStamp = Date.parse(new Date().toISOString().split('T')[0]);
 let minDate = new Date(todayStamp - 2592000000);
@@ -48,6 +50,18 @@ const Money = () => {
                         onChange={ (value) => {
                             setSelectedType(value);
                         } }
+                        BackButton={
+                            <Icon name='left'
+                                  onClick={ () => {
+                                      // TODO 返回上一页
+                                      alert(1);
+                                  } }
+                                  style={ {
+                                      position: 'absolute',
+                                      top: '50%',
+                                      left: '10px',
+                                      transform: 'translateY(-50%)',
+                                  } } /> }
                     /> }
                 footerSlot={
                     <QueueAnim animConfig={ [
