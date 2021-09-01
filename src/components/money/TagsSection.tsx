@@ -20,6 +20,11 @@ const MyTagsSection = styled.section`
       padding       : 3px 18px;
       font-size     : 14px;
       margin        : 8px 12px;
+      
+      &.selected {
+        background-color: #f60;
+        color: #fff;
+      }
     }
   }
 
@@ -34,8 +39,10 @@ const MyTagsSection = styled.section`
 `;
 
 const TagsSection: React.FC = () => {
-
+  // 标签数组
   const [ tags, setTags ] = useState<string[]>( [ "衣", "食", "住", "行" ] );
+  // 勾选中的标签数组
+  const [ selects, setSelects ] = useState<string[]>( [] );
 
   // 添加新的标签回调
   const onAddTag = () => {
@@ -45,11 +52,28 @@ const TagsSection: React.FC = () => {
     }
   };
 
+  // 标签的选择和取消
+  const onToggleTag = (tag: string) => {
+    const isSelect = selects.includes( tag );
+    if ( isSelect ) {
+      // 取消选择
+      setSelects( [ ...selects.filter( t => t !== tag ) ] );
+    } else {
+      // 添加选中样式类名
+      setSelects( [ ...selects, tag ] );
+    }
+  };
+
   return (
     <MyTagsSection>
       <ol>
         {
-          tags.map( item => <li key={ item }>{ item }</li> )
+          tags.map( item => <li
+              key={ item }
+              className={ selects.includes( item ) ? "selected" : "" }
+              onClick={ () => onToggleTag( item ) }
+            >{ item }</li>
+          )
         }
       </ol>
       <button onClick={ onAddTag }>新增标签</button>
