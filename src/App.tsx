@@ -5,16 +5,12 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import styled from "styled-components";
 import "css/index.scss";
-import Nav from "./components/Nav";
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-`;
+import Statistics from "./views/Statistics";
+import Bill from "./views/Bill";
+import Labels from "./views/Labels";
+import Money from "./views/Money";
+import NoMatch from "./views/NoMatch";
 
 function App() {
   return (
@@ -41,54 +37,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
-
-function Statistics() {
-  return (
-    <Wrapper>
-      <h2>
-        统计页面
-      </h2>
-      <Nav />
-    </Wrapper>
-  );
-}
-
-function Bill() {
-  return (
-    <Wrapper>
-      <h2>
-        账单页面
-      </h2>
-      <Nav />
-    </Wrapper>
-  );
-}
-
-function Labels() {
-  return (
-    <Wrapper>
-      <h2>
-        标签页面
-      </h2>
-      <Nav />
-    </Wrapper>
-  );
-}
-
-function Money() {
-  return (
-    <Wrapper>
-      <h2>
-        记账页面
-      </h2>
-      <Nav />
-    </Wrapper>
-  );
-}
-
-function NoMatch() {
-  return <h2>访问地址有误，将返回主页。</h2>;
 }
 
 export default App;
