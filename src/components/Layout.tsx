@@ -7,19 +7,18 @@ const LayoutWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
+  
+  main {
+    flex-grow: 1;
+    overflow: auto;
+  }
 `;
 
-type Props = {
-  name: string,
-  children?: any,
-}
-
-const Layout = (props: Props) => {
+const Layout = (props: any) => {
 
   return (
     <LayoutWrapper>
-      <h2>{ props.name }</h2>
-      <main>
+      <main className={ props.className }>
         { props.children }
       </main>
       <Nav />
