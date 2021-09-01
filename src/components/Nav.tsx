@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Icon from "./Icon";
 
 const NavWrapper = styled.nav`
@@ -25,24 +25,47 @@ const NavWrapper = styled.nav`
 `;
 
 function Nav() {
+  const navList = [
+    {
+      name: "标签",
+      iconName: "label",
+      link: "/labels",
+    },
+    {
+      name: "账单",
+      iconName: "bill",
+      link: "/bill",
+    },
+    {
+      name: "记账",
+      iconName: "money",
+      link: "/money",
+    },
+    {
+      name: "统计",
+      iconName: "statistics",
+      link: "/statistics",
+    },
+  ];
+
   return (
     <NavWrapper>
-      <Link className="nav-item selected" to="/labels" replace>
-        <Icon name="label" />
-        标签
-      </Link>
-      <Link className="nav-item" to="/bill" replace>
-        <Icon name="bill" />
-        账单
-      </Link>
-      <Link className="nav-item" to="/money" replace>
-        <Icon name="money" />
-        记账
-      </Link>
-      <Link className="nav-item" to="/statistics" replace>
-        <Icon name="statistics" />
-        统计
-      </Link>
+      {
+        navList.map((item, index) => {
+          return (
+            <NavLink
+              className="nav-item"
+              activeClassName="selected"
+              to={ item.link }
+              key={ index }
+              replace
+            >
+              <Icon name={ item.iconName } />
+              { item.name }
+            </NavLink>
+          );
+        })
+      }
     </NavWrapper>
   );
 }
