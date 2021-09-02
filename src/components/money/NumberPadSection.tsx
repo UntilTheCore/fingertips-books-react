@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import React, { useState } from "react";
 
-const NumberPadSection = styled.section`
+const MyNumberPadSection = styled.section`
   display: flex;
   flex-direction: column;
 
@@ -69,5 +70,109 @@ const NumberPadSection = styled.section`
   }
 `;
 
+const NumberPadSection: React.FC = () => {
+  const [outPut, setOutPut] = useState<string>("0");
+
+  // 删除
+  const deleteNum = () => {
+    if (outPut.length === 1) {
+      setOutPut("0");
+    } else {
+      setOutPut(outPut.slice(0, -1));
+    }
+  };
+
+  const checkValue = () => {
+    // 小数点左右位数判断，总的长度加起来不超过10位，小数点有效位不超过2位，小数点右边不大于7位
+    if (outPut.includes(".")) {
+      const [lLength, rLength] = outPut.split(".");
+      const lLen = lLength.length;
+      if (rLength) {
+        const rLen = rLength.length;
+        if ((lLen + rLen) > 8 || lLen > 6 || rLen > 1) {
+          return false;
+        }
+      }
+    } else {
+      return outPut.length < 9;
+    }
+    return true;
+  };
+
+  const setValue = (text: string) => {
+    if (checkValue()) {
+      if (text === ".") {
+        if (outPut === "0") {
+          setOutPut("0" + text);
+        } else if (outPut.includes(".")) {
+          return;
+        } else {
+          setOutPut(outPut + text);
+        }
+      } else {
+        if (outPut === "0") {
+          setOutPut(text);
+        } else {
+          setOutPut(outPut + text);
+        }
+      }
+    }
+  };
+
+  const handleBtnWrapperClick = (e: React.MouseEvent) => {
+    const text = (e.target as HTMLButtonElement).textContent;
+    if (text === "") return;
+
+    switch (text) {
+      case "0":
+      case "1":
+      case "2":
+      case "3":
+      case "4":
+      case "5":
+      case "6":
+      case "7":
+      case "8":
+      case "9":
+        setValue(text);
+        break;
+      case ".":
+        setValue(text);
+        break;
+      case "删除":
+        deleteNum();
+        break;
+      case "清空":
+        setOutPut("0");
+        break;
+      case "ok":
+        break;
+    }
+  };
+
+  return (
+    <MyNumberPadSection>
+      <div className="output">
+        { outPut }
+      </div>
+      <div className="pad clearfix" onClick={ handleBtnWrapperClick }>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>删除</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>清空</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button className="ok">OK</button>
+        <button className="zero">0</button>
+        <button className="dot">.</button>
+      </div>
+    </MyNumberPadSection>
+  );
+};
 
 export { NumberPadSection };
