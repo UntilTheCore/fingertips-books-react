@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import { Wrapper } from "./NumberPadSection/Wrapper";
 import { generatorOutput } from "./NumberPadSection/generatorOutput";
 
-const NumberPadSection: React.FC = () => {
-  const [outPut, setOutPut] = useState<string>("0");
+type Props = {
+  onChange: (money: number) => void,
+  onOk: () => void,
+}
+
+const NumberPadSection: React.FC<Props> = (props) => {
+
+  const [outPut, setOutPut] = useState("0");
 
   const handleBtnWrapperClick = (e: React.MouseEvent) => {
     const text = (e.target as HTMLButtonElement).textContent;
@@ -14,6 +20,8 @@ const NumberPadSection: React.FC = () => {
     }
 
     setOutPut(generatorOutput(text!, outPut));
+    props.onChange(parseFloat(generatorOutput(text!, outPut)));
+
   };
 
   return (

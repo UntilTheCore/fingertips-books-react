@@ -28,15 +28,19 @@ const MyCategorySection = styled.section`
   }
 `;
 
-const CategorySection = () => {
+type Props = {
+  value: "+" | "-",
+  onChange: (category: "+" | "-") => void,
+}
+
+const CategorySection: React.FC<Props> = (props) => {
   const categoryMap = {"-": "支出", "+": "收入"};
   // 获取类型：以对象的键
   type categoryType = keyof typeof categoryMap
   const [categoryList] = useState<categoryType[]>(["-", "+"]);
-  const [category, setCategory] = useState("-");
 
   const handleClick = (c: categoryType) => {
-    setCategory(c);
+    props.onChange(c);
   };
 
   return (
@@ -46,7 +50,7 @@ const CategorySection = () => {
           categoryList.map(item =>
             <li
               key={ item }
-              className={ category === item ? "selected" : "" }
+              className={ props.value === item ? "selected" : "" }
               onClick={ () => handleClick(item) }
             >{ categoryMap[item] }</li>
           )

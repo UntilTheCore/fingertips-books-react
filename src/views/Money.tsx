@@ -1,5 +1,5 @@
 import Layout from "../components/Layout";
-import React from "react";
+import React, { useState } from "react";
 import { TagsSection } from "components/money/TagsSection";
 import { CategorySection } from "components/money/CategorySection";
 import { NotesSection } from "components/money/NotesSection";
@@ -12,14 +12,48 @@ const MyLayout = styled(Layout)`
 `;
 
 function Money() {
+  const [form, setForm] = useState({
+    tags: [] as string[],
+    note: "",
+    category: "-" as "+" | "-",
+    money: 0,
+  });
+
+  const onChange = (obj: Partial<typeof form>) => {
+    setForm({
+      ...form,
+      ...obj
+    });
+  };
+
   return (
     <MyLayout>
-      <TagsSection />
-      <NotesSection />
-      <CategorySection />
-      <NumberPadSection>
-
-      </NumberPadSection>
+      <TagsSection
+        value={ form.tags }
+        onChange={ tags => {
+          onChange({tags});
+        } }
+      />
+      <NotesSection
+        value={ form.note }
+        onChange={ note => {
+          onChange({note});
+        } }
+      />
+      <CategorySection
+        value={ form.category }
+        onChange={ category => {
+          onChange({category});
+        } }
+      />
+      <NumberPadSection
+        onChange={ money => {
+          onChange({money});
+        } }
+        onOk={ () => {
+          console.log("ok");
+        } }
+      />
     </MyLayout>
   );
 }
