@@ -1,157 +1,23 @@
-import styled from "styled-components";
 import React, { useState } from "react";
-
-const MyNumberPadSection = styled.section`
-  display: flex;
-  flex-direction: column;
-
-  > .output {
-    background: white;
-    font-size: 36px;
-    line-height: 72px;
-    text-align: right;
-    padding: 0 16px;
-    box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.25),
-    inset 0 5px 5px -5px rgba(0, 0, 0, 0.25);
-  }
-
-  > .pad {
-    > button {
-      font-size: 18px;
-      float: left;
-      width: 25%;
-      height: 64px;
-      border: none;
-
-      &.ok {
-        height: 128px;
-        float: right;
-      }
-
-      &.zero {
-        width: 50%;
-      }
-
-      &:nth-child(1) {
-        background: #f2f2f2;
-      }
-
-      &:nth-child(2),
-      &:nth-child(5) {
-        background: #E0E0E0;
-      }
-
-      &:nth-child(3),
-      &:nth-child(6),
-      &:nth-child(9) {
-        background: #D3D3D3;
-      }
-
-      &:nth-child(4),
-      &:nth-child(7),
-      &:nth-child(10) {
-        background: #C1C1C1;
-      }
-
-      &:nth-child(8),
-      &:nth-child(11),
-      &:nth-child(13) {
-        background: #B8B8B8;
-      }
-
-      &:nth-child(12) {
-        background: #9A9A9A;
-      }
-
-      &:nth-child(14) {
-        background: #A9A9A9;
-      }
-    }
-  }
-`;
+import { Wrapper } from "./NumberPadSection/Wrapper";
+import { generatorOutput } from "./NumberPadSection/generatorOutput";
 
 const NumberPadSection: React.FC = () => {
   const [outPut, setOutPut] = useState<string>("0");
-
-  // 删除
-  const deleteNum = () => {
-    if (outPut.length === 1) {
-      setOutPut("0");
-    } else {
-      setOutPut(outPut.slice(0, -1));
-    }
-  };
-
-  const checkValue = () => {
-    // 小数点左右位数判断，总的长度加起来不超过10位，小数点有效位不超过2位，小数点右边不大于7位
-    if (outPut.includes(".")) {
-      const [lLength, rLength] = outPut.split(".");
-      const lLen = lLength.length;
-      if (rLength) {
-        const rLen = rLength.length;
-        if ((lLen + rLen) > 8 || lLen > 6 || rLen > 1) {
-          return false;
-        }
-      }
-    } else {
-      return outPut.length < 9;
-    }
-    return true;
-  };
-
-  const setValue = (text: string) => {
-    if (checkValue()) {
-      if (text === ".") {
-        if (outPut === "0") {
-          setOutPut("0" + text);
-        } else if (outPut.includes(".")) {
-          return;
-        } else {
-          setOutPut(outPut + text);
-        }
-      } else {
-        if (outPut === "0") {
-          setOutPut(text);
-        } else {
-          setOutPut(outPut + text);
-        }
-      }
-    }
-  };
 
   const handleBtnWrapperClick = (e: React.MouseEvent) => {
     const text = (e.target as HTMLButtonElement).textContent;
     if (text === "") return;
 
-    switch (text) {
-      case "0":
-      case "1":
-      case "2":
-      case "3":
-      case "4":
-      case "5":
-      case "6":
-      case "7":
-      case "8":
-      case "9":
-        setValue(text);
-        break;
-      case ".":
-        setValue(text);
-        break;
-      case "删除":
-        deleteNum();
-        break;
-      case "清空":
-        setOutPut("0");
-        break;
-      case "ok":
-        break;
+    if (text === "ok") {
+      // TODO
     }
+
+    setOutPut(generatorOutput(text!, outPut));
   };
 
   return (
-    <MyNumberPadSection>
+    <Wrapper>
       <div className="output">
         { outPut }
       </div>
@@ -171,7 +37,7 @@ const NumberPadSection: React.FC = () => {
         <button className="zero">0</button>
         <button className="dot">.</button>
       </div>
-    </MyNumberPadSection>
+    </Wrapper>
   );
 };
 
