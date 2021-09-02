@@ -9,18 +9,13 @@ import styled from "styled-components";
 const MyLayout = styled(Layout)`
   display: flex;
   flex-direction: column;
-`
+`;
 
 function Money() {
   return (
     <MyLayout>
-      <TagsSection/>
-      <NotesSection>
-        <label>
-          <span>备注</span>
-          <input type="text" placeholder="在这里添加备注" />
-        </label>
-      </NotesSection>
+      <TagsSection />
+      <NotesSection />
       <CategorySection>
         <ul>
           <li className="selected">支出</li>
