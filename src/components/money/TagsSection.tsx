@@ -40,8 +40,8 @@ const MyTagsSection = styled.section`
 `;
 
 type Props = {
-  value: string[],
-  onChange: (tags: string[]) => void,
+  value: number[],
+  onChange: (tagIds: number[]) => void,
 }
 
 const TagsSection: React.FC<Props> = (props) => {
@@ -54,19 +54,19 @@ const TagsSection: React.FC<Props> = (props) => {
   const onAddTag = () => {
     const newTag = window.prompt("请输入新的标签名:");
     if (newTag && newTag.trim()) {
-      setTags([...tags, newTag]);
+      setTags([...tags, {id: Date.now(), name: newTag}]);
     }
   };
 
   // 标签的选择和取消
-  const onToggleTag = (tag: string) => {
-    const isSelect = selects.includes(tag);
+  const onToggleTag = (tagId: number) => {
+    const isSelect = selects.includes(tagId);
     if (isSelect) {
       // 取消选择
-      props.onChange([...selects.filter(t => t !== tag)]);
+      props.onChange([...selects.filter(t => t !== tagId)]);
     } else {
       // 添加选中样式类名
-      props.onChange([...selects, tag]);
+      props.onChange([...selects, tagId]);
     }
   };
 
@@ -74,11 +74,14 @@ const TagsSection: React.FC<Props> = (props) => {
     <MyTagsSection>
       <ol>
         {
-          tags.map(item => <li
-              key={ item }
-              className={ selects.includes(item) ? "selected" : "" }
-              onClick={ () => onToggleTag(item) }
-            >{ item }</li>
+          tags.map(item => (
+              <li
+                key={ item.id }
+                className={ selects.includes(item.id) ? "selected" : "" }
+                onClick={ () => onToggleTag(item.id) }
+              >{ item.name }
+              </li>
+            )
           )
         }
       </ol>

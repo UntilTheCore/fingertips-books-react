@@ -13,7 +13,7 @@ const MyLayout = styled(Layout)`
 
 function Money() {
   const [form, setForm] = useState({
-    tags: [] as string[],
+    tags: [] as number[],
     note: "",
     category: "-" as "+" | "-",
     money: 0,
