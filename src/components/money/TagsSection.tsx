@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React from "react";
+import { useTags } from "hook/useTags";
 
 const MyTagsSection = styled.section`
   background: #FFFFFF;
@@ -45,7 +46,7 @@ type Props = {
 
 const TagsSection: React.FC<Props> = (props) => {
   // 标签数组
-  const [tags, setTags] = useState<string[]>(["衣", "食", "住", "行"]);
+  const {tags, setTags} = useTags();
   // 勾选中的标签数组
   const selects = props.value;
 
