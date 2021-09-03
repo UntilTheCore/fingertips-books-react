@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React from "react";
 import { useTags } from "hook/useTags";
+import CreateId from "../../lib/createId";
 
 const MyTagsSection = styled.section`
   background: #FFFFFF;
@@ -54,7 +55,7 @@ const TagsSection: React.FC<Props> = (props) => {
   const onAddTag = () => {
     const newTag = window.prompt("请输入新的标签名:");
     if (newTag && newTag.trim()) {
-      setTags([...tags, {id: Date.now(), name: newTag}]);
+      setTags([...tags, {id: (new CreateId()).getId(), name: newTag}]);
     }
   };
 
