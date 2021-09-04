@@ -14,7 +14,7 @@ const NavWrapper = styled.nav`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 44px;
+    height: 50px;
     text-align: center;
     font-size: 14px;
 
