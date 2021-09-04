@@ -28,6 +28,7 @@ type Params = {
 const EditLabel: React.FC = () => {
   const { id } = useParams<Params>();
   const { findTag } = useTags();
+  const [tagName,setTagName] = useState('');
   const tag = findTag(parseInt(id));
 
   if (tag) {
@@ -35,7 +36,7 @@ const EditLabel: React.FC = () => {
       <Layout>
         <TopBar title="编辑标签" />
         <InputWrapper>
-          <Input title={tag.name} placeholder="请输入新标签名" />
+          <Input title="标签名" placeholder="请输入新标签名" />
         </InputWrapper>
         <Space />
         <Space />
