@@ -6,8 +6,11 @@ const MyNotesSection = styled.section`
   background: #f5f5f5;
   padding: 0 16px;
   font-size: 14px;
-
 `;
+
+const InputWrapper = styled.section`
+  padding: 12px 0;
+`
 
 type Props = {
   value: string,
@@ -23,7 +26,9 @@ const NotesSection: React.FC<Props> = (props) => {
 
   return (
     <MyNotesSection>
-      <Input title="备注" value={note} placeholder="请填写备注" onChange={onChange} />
+      <InputWrapper>
+        <Input title="备注" value={note} placeholder="请填写备注" onChange={onChange} />
+      </InputWrapper>
     </MyNotesSection>
   );
 };
