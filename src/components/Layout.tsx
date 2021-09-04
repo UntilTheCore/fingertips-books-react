@@ -18,8 +18,8 @@ const Layout = (props: any) => {
 
   return (
     <LayoutWrapper>
-      <main className={ props.className }>
-        { props.children }
+      <main className={props.className}>
+        {props.children}
       </main>
       <Nav />
     </LayoutWrapper>
