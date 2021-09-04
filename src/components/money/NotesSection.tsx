@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import Input from "components/Input";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 const MyNotesSection = styled.section`
@@ -6,23 +7,6 @@ const MyNotesSection = styled.section`
   padding: 0 16px;
   font-size: 14px;
 
-  > label {
-    display: flex;
-    align-items: center;
-
-    > span {
-      margin-right: 16px;
-      white-space: nowrap;
-    }
-
-    > input {
-      display: block;
-      width: 100%;
-      height: 72px;
-      background: none;
-      border: none;
-    }
-  }
 `;
 
 type Props = {
@@ -31,20 +15,15 @@ type Props = {
 }
 
 const NotesSection: React.FC<Props> = (props) => {
-  const refInput = useRef<HTMLInputElement>(null);
+  const [note, setNote] = useState('');
 
-  const handleBlur = () => {
-    if (refInput.current !== null) {
-      props.onChange(refInput.current.value);
-    }
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNote(e.target.value);
   };
 
   return (
     <MyNotesSection>
-      <label>
-        <span>备注</span>
-        <input type="text" defaultValue={ props.value } placeholder="在这里添加备注" ref={ refInput } onBlur={ handleBlur } />
-      </label>
+      <Input title="备注" value={note} placeholder="请填写备注" onChange={onChange} />
     </MyNotesSection>
   );
 };

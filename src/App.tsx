@@ -11,7 +11,7 @@ import Bill from "views/Bill";
 import Labels from "views/Labels";
 import Money from "views/Money";
 import NoMatch from "views/NoMatch";
-import Label from "views/Labels/Label";
+import EditLabel from "views/Labels/EditLabel";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <Labels />
         </Route>
         <Route path="/labels/:label" exact>
-          <Label />
+          <EditLabel />
         </Route>
         <Route path="/bill" exact>
           <Bill />
