@@ -26,7 +26,7 @@ type Props = {
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<Props> = (props) => {
-  const { title, ...attr } = props;
+  const { title, children, ...attr } = props;
   return (
     <InputWrapper>
       <label>

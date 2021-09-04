@@ -28,7 +28,6 @@ type Params = {
 const EditLabel: React.FC = () => {
   const { id } = useParams<Params>();
   const { findTag } = useTags();
-  const [tagName,setTagName] = useState('');
   const tag = findTag(parseInt(id));
 
   if (tag) {

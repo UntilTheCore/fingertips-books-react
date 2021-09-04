@@ -20,7 +20,8 @@ type Props = {
 const NotesSection: React.FC<Props> = (props) => {
   const [note, setNote] = useState('');
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // 这里onChange的类型应使用 React.ChangeEventHandler<HTMLInputElement> 来为其设置类型，但可以不设置在函数而设置到参数的类型上，两种方式都能正确获取value，但最好还是给函数设置类型而不是在参数上。
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNote(e.target.value);
   };
 
