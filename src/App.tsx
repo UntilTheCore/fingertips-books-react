@@ -20,7 +20,7 @@ function App() {
         <Route path="/labels" exact>
           <Labels />
         </Route>
-        <Route path="/labels/:label" exact>
+        <Route path="/labels/:id" exact>
           <EditLabel />
         </Route>
         <Route path="/bill" exact>
