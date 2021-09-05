@@ -37,6 +37,12 @@ const useTags = () => {
     return result;
   }
 
+  /**
+   * 根据标签的id和提供含name的对象更新tag名
+   * @param tagId
+   * @param obj 
+   * @returns 
+   */
   const updateTags = (tagId: number, obj: { newName: string }) => {
     const index = findTagIndex(tagId);
     if (index !== -1) {
@@ -47,7 +53,24 @@ const useTags = () => {
     }
     return false;
   }
-  return { tags, setTags, findTag, findTagIndex, updateTags };
+
+  /**
+   * 根据tag id 删除标签
+   * @param tagId 
+   * @returns 
+   */
+  const deleteTag = (tagId: number) => {
+    const index = findTagIndex(tagId);
+    if (index !== -1) {
+      const cloneTags: tagType[] = JSON.parse(JSON.stringify(tags));
+      cloneTags.splice(index, 1);
+      setTags(cloneTags);
+      return true;
+    }
+    return false;
+  }
+
+  return { tags, setTags, findTag, findTagIndex, updateTags, deleteTag };
 };
 
 export { useTags };
