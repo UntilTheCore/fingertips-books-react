@@ -1,5 +1,5 @@
 import Input from "components/Input";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const MyNotesSection = styled.section`

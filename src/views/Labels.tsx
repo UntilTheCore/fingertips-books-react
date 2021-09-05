@@ -36,18 +36,18 @@ const Center = styled.div`
 
 
 const Labels = () => {
-  const {tags, setTags} = useTags();
+  const { tags } = useTags();
   return (
     <Layout name="标签页面">
       <TagList>
-        { tags.map(tag =>
-          <li key={ tag.id }>
-            <Link to={ "/labels/" + tag.id }>
-              <span className="oneLine">{ tag.name }</span>
+        {tags.map(tag =>
+          <li key={tag.id}>
+            <Link to={"/labels/" + tag.id}>
+              <span className="oneLine">{tag.name}</span>
               <Icon name="right" />
             </Link>
           </li>
-        ) }
+        )}
       </TagList>
       <Center>
         <Space />
