@@ -43,12 +43,12 @@ const useTags = () => {
    * @param obj 
    * @returns 
    */
-  const updateTags = (tagId: number, obj: { newName: string }) => {
+  const updateTags = (tagId: number, { name }: { name: string }) => {
     const index = findTagIndex(tagId);
     if (index !== -1) {
-      const cloneTags: tagType[] = JSON.parse(JSON.stringify(tags));
-      cloneTags.splice(index, 1, { id: tagId, name: obj.newName });
-      setTags(() => cloneTags);
+      setTags(tags.map(tag => {
+        return tag.id === tagId ? { id: tag.id, name } : tag;
+      }));
       return true;
     }
     return false;
@@ -62,9 +62,8 @@ const useTags = () => {
   const deleteTag = (tagId: number) => {
     const index = findTagIndex(tagId);
     if (index !== -1) {
-      const cloneTags: tagType[] = JSON.parse(JSON.stringify(tags));
-      cloneTags.splice(index, 1);
-      setTags(cloneTags);
+      // 过滤出所有不相同id的tag
+      setTags(tags.filter(tag => tag.id !== tagId));
       return true;
     }
     return false;

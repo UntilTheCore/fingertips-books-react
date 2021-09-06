@@ -38,7 +38,7 @@ const EditLabel: React.FC = () => {
           value={tag.name}
           placeholder="请输入新标签名"
           onChange={(e) => {
-            updateTags(tag.id, { newName: e.target.value })
+            updateTags(tag.id, { name: e.target.value })
           }}
         />
       </InputWrapper>
