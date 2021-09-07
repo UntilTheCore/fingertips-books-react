@@ -15,8 +15,6 @@ const useTags = () => {
   useEffect(() => {
     // 获取持久化数据
     const localTags: tagType[] = JSON.parse(localStorage.getItem('tags') || '[]');
-    console.log('get Tags');
-    console.log(localTags);
     if (localTags.length === 0) {
       const defaultTags: tagType[] = [
         { id: (new CreateId()).getId(), name: "衣" },
@@ -31,8 +29,6 @@ const useTags = () => {
   }, []);
 
   useUpdate(() => {
-    console.log(tags);
-    
     localStorage.setItem('tags', JSON.stringify(tags));
   }, [tags]);
 
