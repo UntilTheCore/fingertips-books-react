@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { useTags } from "hook/useTags";
-import CreateId from "../../lib/createId";
+import { useTags } from "hooks/useTags";
 
 const MyTagsSection = styled.section`
   background: #FFFFFF;
@@ -47,17 +46,9 @@ type Props = {
 
 const TagsSection: React.FC<Props> = (props) => {
   // 标签数组
-  const {tags, setTags} = useTags();
+  const { tags, addTag } = useTags();
   // 勾选中的标签数组
   const selects = props.value;
-
-  // 添加新的标签回调
-  const onAddTag = () => {
-    const newTag = window.prompt("请输入新的标签名:");
-    if (newTag && newTag.trim()) {
-      setTags([...tags, {id: (new CreateId()).getId(), name: newTag}]);
-    }
-  };
 
   // 标签的选择和取消
   const onToggleTag = (tagId: number) => {
@@ -76,17 +67,17 @@ const TagsSection: React.FC<Props> = (props) => {
       <ol>
         {
           tags.map(item => (
-              <li
-                key={ item.id }
-                className={ selects.includes(item.id) ? "selected" : "" }
-                onClick={ () => onToggleTag(item.id) }
-              >{ item.name }
-              </li>
-            )
+            <li
+              key={item.id}
+              className={selects.includes(item.id) ? "selected" : ""}
+              onClick={() => onToggleTag(item.id)}
+            >{item.name}
+            </li>
+          )
           )
         }
       </ol>
-      <button onClick={ onAddTag }>新增标签</button>
+      <button onClick={addTag}>新增标签</button>
     </MyTagsSection>
   );
 };

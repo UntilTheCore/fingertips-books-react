@@ -21,6 +21,14 @@ const useTags = () => {
     return tags.filter(tag => tag.id === tagId)[0];
   }
 
+  // 添加新的标签
+  const addTag = () => {
+    const newTag = window.prompt("请输入新的标签名:");
+    if (newTag && newTag.trim()) {
+      setTags([...tags, { id: (new CreateId()).getId(), name: newTag }]);
+    }
+  }
+
   /**
    * 根据tag id找在 _tags 中的下标
    * @param tagId 
@@ -69,7 +77,7 @@ const useTags = () => {
     return false;
   }
 
-  return { tags, setTags, findTag, findTagIndex, updateTags, deleteTag };
+  return { tags, setTags, addTag, findTag, findTagIndex, updateTags, deleteTag };
 };
 
 export { useTags };

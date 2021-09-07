@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import Layout from "components/Layout";
-import { useTags } from "hook/useTags";
+import { useTags } from "hooks/useTags";
 import { Link } from "react-router-dom";
 import Icon from "components/Icon";
 import Space from "components/Space";

@@ -3,7 +3,7 @@ import Input from "components/Input";
 import Layout from "components/Layout";
 import Space from "components/Space";
 import TopBar from "components/TopBar";
-import { useTags } from "hook/useTags";
+import { useTags } from "hooks/useTags";
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
