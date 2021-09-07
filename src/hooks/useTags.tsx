@@ -1,5 +1,6 @@
-import { useState } from "react";
-import CreateId from "../lib/createId";
+import { useEffect, useState } from "react";
+import CreateId from "lib/createId";
+import { useUpdate } from "hooks/useUpdate";
 
 type tagType = {
   id: number,
@@ -8,15 +9,33 @@ type tagType = {
 
 type findTagType = (tagId: number) => tagType | undefined;
 
-const defaultTags: tagType[] = [
-  { id: (new CreateId()).getId(), name: "衣" },
-  { id: (new CreateId()).getId(), name: "食" },
-  { id: (new CreateId()).getId(), name: "住" },
-  { id: (new CreateId()).getId(), name: "行" },
-]
-
 const useTags = () => {
-  const [tags, setTags] = useState<tagType[]>(defaultTags);
+  const [tags, setTags] = useState<tagType[]>([]);
+
+  useEffect(() => {
+    // 获取持久化数据
+    const localTags: tagType[] = JSON.parse(localStorage.getItem('tags') || '[]');
+    console.log('get Tags');
+    console.log(localTags);
+    if (localTags.length === 0) {
+      const defaultTags: tagType[] = [
+        { id: (new CreateId()).getId(), name: "衣" },
+        { id: (new CreateId()).getId(), name: "食" },
+        { id: (new CreateId()).getId(), name: "住" },
+        { id: (new CreateId()).getId(), name: "行" },
+      ]
+      setTags(defaultTags);
+    } else {
+      setTags(localTags);
+    }
+  }, []);
+
+  useUpdate(() => {
+    console.log(tags);
+    
+    localStorage.setItem('tags', JSON.stringify(tags));
+  }, [tags]);
+
   const findTag: findTagType = (tagId: number): tagType | undefined => {
     return tags.filter(tag => tag.id === tagId)[0];
   }
