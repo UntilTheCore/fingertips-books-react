@@ -55,10 +55,10 @@ const TagsSection: React.FC<Props> = (props) => {
     const isSelect = selects.includes(tagId);
     if (isSelect) {
       // 取消选择
-      props.onChange([...selects.filter(t => t !== tagId)]);
+      props.onChange([]);
     } else {
       // 添加选中样式类名
-      props.onChange([...selects, tagId]);
+      props.onChange([tagId]);
     }
   };
 
