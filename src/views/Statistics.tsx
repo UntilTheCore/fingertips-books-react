@@ -5,58 +5,78 @@ import { useRecords } from "hooks/useRecords";
 import { CategorySection } from "components/money/CategorySection";
 import styled from "styled-components";
 import { useTags } from "hooks/useTags";
-import dayjs from "dayjs";
-
 
 const CategorySectionWrapper = styled.section`
-  background-color: #f5f5f5;
+  background-color : #f5f5f5;
 `;
 
-type recordType = {
-  tags: number[],
-  note: string,
-  category: "+" | "-",
-  money: number,
-  createAt: string, // 创建记录的日期
-}
+const StatisticsListWrapper = styled.section`
+  ul {
+    
+    li {
+      padding: 6px 12px;
+    }
+    
+    > li:first-child {
+      display: flex;
+      justify-content : space-between;
+    }
+    
+    > li:not(:first-child) {
+      display: flex;
+      justify-content : space-between;
+      border-bottom: 1px solid #cecece;
+      background-color: #fff;
+      
+      span {
+        width: 50px;
+      }
+      
+      span:nth-child(2) {
+        flex: 2;
+        color: #999;
+      }
+      
+      span:nth-child(3) {
+        text-align: right;
+      }
+    }
+  }
+`;
 
 const Statistics = () => {
-  const {records} = useRecords();
-  const [category, setCategory] = useState<"+" | "-">("-");
-  const {tags} = useTags();
+  const { getRecordsByDate } = useRecords();
+  const [ category, setCategory ] = useState<"+" | "-">( "-" );
+  const { findTagName } = useTags();
 
-  const categoryList: { name: string, list: recordType[] }[] = tags.map(t => {
-    return {
-      name: t.name,
-      list: records.filter(r => r.tags[0] === t.id)
-    };
-  }).filter(c => c.list.length > 0);
-
-  console.log(categoryList);
+  const records = getRecordsByDate();
 
   return (
     <Layout name="统计页面">
       <CategorySectionWrapper>
-        <CategorySection value={ category } onChange={ (v) => setCategory(v) } />
+        <CategorySection value={ category } onChange={ (v) => setCategory( v ) }/>
       </CategorySectionWrapper>
-      {
-        categoryList.map(c => {
-          return (
-            <dl key={ c.name }>
-              <dt>{ c.name }</dt>
-              {
-                c.list.map((r, i) =>
-                  <dd key={ i }>
-                    <span>{ r.money }</span>
-                    &nbsp;&nbsp;
-                    <span>{ dayjs(r.createAt).format("YYYY.MM.DD") }</span>
-                  </dd>
-                )
-              }
-            </dl>
-          );
-        })
-      }
+      <StatisticsListWrapper>
+        {
+          records.map( r => (
+            <ul key={r.date}>
+              <li>
+                <span>{ r.date }</span>
+                <span>{ r.list.reduce( (max, item) => {
+                  return max + item.money;
+                }, 0 ) }</span>
+              </li>
+              { r.list.map( (l,i) => (
+                <li key={i}>
+                  <span>{ findTagName( l.tags[0] ) }</span>
+                  <span>{ l.note }</span>
+                  <span>{ l.money }</span>
+                </li>
+              ) ) }
+            </ul>
+          ) )
+        }
+      </StatisticsListWrapper>
     </Layout>
   );
 };
