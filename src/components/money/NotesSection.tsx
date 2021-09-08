@@ -26,7 +26,7 @@ const NotesSection: React.FC<Props> = (props) => {
   return (
     <MyNotesSection>
       <InputWrapper>
-        <Input title="备注" defaultValue="" placeholder="请填写备注" onChange={ onChange } />
+        <Input title="备注" value={ props.value } placeholder="请填写备注" onChange={ onChange } />
       </InputWrapper>
     </MyNotesSection>
   );

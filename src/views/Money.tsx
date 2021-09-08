@@ -23,14 +23,15 @@ type formType = {
   money: number,
 }
 
-function Money() {
-  const [form, setForm] = useState<formType>({
-    tags: [],
-    note: "",
-    category: "-",
-    money: 0,
-  });
+const defaultForm: formType = {
+  tags: [],
+  note: "",
+  category: "-",
+  money: 0,
+};
 
+function Money() {
+  const [form, setForm] = useState<formType>(defaultForm);
   const {addRecord} = useRecords();
 
   const onChange = (obj: Partial<typeof form>) => {
@@ -42,6 +43,7 @@ function Money() {
 
   const onAddRecord = () => {
     addRecord(form) && alert("记录已保存");
+    setForm(defaultForm);
   };
 
   return (
