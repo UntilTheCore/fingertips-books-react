@@ -5,25 +5,39 @@ import { CategorySection } from "components/money/CategorySection";
 import { NotesSection } from "components/money/NotesSection";
 import { NumberPadSection } from "components/money/NumberPadSection";
 import styled from "styled-components";
+import { useRecords } from "../hooks/useRecords";
 
 const MyLayout = styled(Layout)`
   display: flex;
   flex-direction: column;
 `;
 
+type formType = {
+  tags: number[],
+  note: string,
+  category: "+" | "-",
+  money: number,
+}
+
 function Money() {
-  const [form, setForm] = useState({
-    tags: [] as number[],
+  const [form, setForm] = useState<formType>({
+    tags: [],
     note: "",
-    category: "-" as "+" | "-",
+    category: "-",
     money: 0,
   });
+
+  const {addRecord} = useRecords();
 
   const onChange = (obj: Partial<typeof form>) => {
     setForm({
       ...form,
       ...obj
     });
+  };
+
+  const onAddRecord = () => {
+    addRecord(form) && alert("记录已保存");
   };
 
   return (
@@ -47,12 +61,11 @@ function Money() {
         } }
       />
       <NumberPadSection
+        value={ form.money }
         onChange={ money => {
           onChange({money});
         } }
-        onOk={ () => {
-          console.log("ok");
-        } }
+        onOk={ onAddRecord }
       />
     </MyLayout>
   );

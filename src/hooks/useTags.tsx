@@ -46,7 +46,7 @@ const useTags = () => {
 
   /**
    * 根据tag id找在 _tags 中的下标
-   * @param tagId 
+   * @param tagId
    * @returns -1 或 找到的下标
    */
   const findTagIndex = (tagId: number) => {
@@ -63,8 +63,8 @@ const useTags = () => {
   /**
    * 根据标签的id和提供含name的对象更新tag名
    * @param tagId
-   * @param obj 
-   * @returns 
+   * @param obj
+   * @returns
    */
   const updateTags = (tagId: number, { name }: { name: string }) => {
     const index = findTagIndex(tagId);
@@ -79,8 +79,8 @@ const useTags = () => {
 
   /**
    * 根据tag id 删除标签
-   * @param tagId 
-   * @returns 
+   * @param tagId
+   * @returns
    */
   const deleteTag = (tagId: number) => {
     const index = findTagIndex(tagId);

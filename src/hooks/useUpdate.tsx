@@ -6,14 +6,13 @@ const useUpdate = (fn: () => void, deps: any[]) => {
 
   useEffect(() => {
     count.current++;
-  })
+  });
 
   useEffect(() => {
     if (count.current > 1) {
-      console.log('set tags');
       fn();
     }
   }, [fn, _deps]);
-}
+};
 
 export { useUpdate };
