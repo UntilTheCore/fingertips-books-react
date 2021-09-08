@@ -3,31 +3,31 @@ import { Wrapper } from "./NumberPadSection/Wrapper";
 import { generatorOutput } from "./NumberPadSection/generatorOutput";
 
 type Props = {
+  value: number,
   onChange: (money: number) => void,
   onOk: () => void,
 }
 
 const NumberPadSection: React.FC<Props> = (props) => {
 
-  const [outPut, setOutPut] = useState("0");
+  const [outPut, setOutPut] = useState(props.value + "");
 
   const handleBtnWrapperClick = (e: React.MouseEvent) => {
     const text = (e.target as HTMLButtonElement).textContent;
     if (text === "") return;
 
-    if (text === "ok") {
-      // TODO
+    if (text && text.toLowerCase() === "ok") {
+      props.onOk();
+    } else {
+      setOutPut(generatorOutput(text!, outPut));
+      props.onChange(parseFloat(generatorOutput(text!, outPut)));
     }
-
-    setOutPut(generatorOutput(text!, outPut));
-    props.onChange(parseFloat(generatorOutput(text!, outPut)));
-
   };
 
   return (
     <Wrapper>
       <div className="output">
-        { outPut }
+        { props.value }
       </div>
       <div className="pad clearfix" onClick={ handleBtnWrapperClick }>
         <button>1</button>
