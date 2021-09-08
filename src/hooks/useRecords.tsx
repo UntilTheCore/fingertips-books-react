@@ -37,6 +37,7 @@ const useRecords = () => {
       createAt: new Date().toISOString()
     };
     setRecords([...records, temp]);
+    return true;
   };
 
   return {records, addRecord};
