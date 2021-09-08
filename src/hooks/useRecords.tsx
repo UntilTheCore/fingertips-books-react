@@ -44,14 +44,14 @@ const useRecords = () => {
   /**
    * 通过日期筛选获取记录数据
    */
-  const getRecordsByDate = (): { date: string, list: recordType[] }[] => {
+  const getRecordsByDate = (category: '+' | '-'): { date: string, list: recordType[] }[] => {
     const result = [];
 
     for ( let i = 0; i < 6; i++ ) {
       const day = dayjs().subtract( i, "day" );
       result[i] = {
-        date: day.format( "YYYY.MM.DD" ),
-        list: records.filter( r => dayjs( r.createAt ).isSame( day, "day" ) ).reverse()
+        date: day.format( "YYYY年MM月DD日" ),
+        list: records.filter( r => dayjs( r.createAt ).isSame( day, "day" ) ).filter(n => n.category === category).reverse()
       };
     }
 

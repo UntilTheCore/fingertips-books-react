@@ -49,7 +49,7 @@ const Statistics = () => {
   const [ category, setCategory ] = useState<"+" | "-">( "-" );
   const { findTagName } = useTags();
 
-  const records = getRecordsByDate();
+  const records = getRecordsByDate(category);
 
   return (
     <Layout name="统计页面">
