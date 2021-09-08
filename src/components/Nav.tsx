@@ -32,13 +32,8 @@ function Nav() {
       link: "/labels",
     },
     {
-      name: "账单",
-      iconName: "bill",
-      link: "/bill",
-    },
-    {
       name: "记账",
-      iconName: "money",
+      iconName: "bill",
       link: "/money",
     },
     {
