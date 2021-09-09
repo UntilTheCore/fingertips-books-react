@@ -2,6 +2,7 @@
   "name": "fingertips-book-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://untilthecore.github.io/fingertips-book-react-website/",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@svgr/webpack": "4.3.3",
@@ -81,7 +82,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "auto_build": "sh scripts/deploy.sh"
   },
   "eslintConfig": {
     "extends": "react-app"
